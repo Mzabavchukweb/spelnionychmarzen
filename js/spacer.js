@@ -150,7 +150,7 @@
   });
 
   // ruch: przeciąganie z wybiegiem, powolny obrót do pierwszego dotknięcia, przybliżanie
-  function ogranicz() { pitch = Math.max(-1.25, Math.min(1.25, pitch)); fov = Math.max(40 * RAD, Math.min(95 * RAD, fov)); }
+  function ogranicz() { pitch = Math.max(-1.25, Math.min(1.25, pitch)); fov = Math.max(52 * RAD, Math.min(95 * RAD, fov)); }
   function dotkniete() { if (!ruszone) { ruszone = true; pole.classList.add('spacer--ruszony'); } }
   function tyka(t) {
     var dt = Math.min(50, t - ost || 16); ost = t;
