@@ -44,6 +44,14 @@
     if (!gotowy) return;
     if (im.complete && im.naturalWidth) gotowy(im); else im.addEventListener('load', function () { gotowy(im); }, { once: true });
   }
+  // na dużym ekranie, gdy karta graficzna pozwala, po pokazaniu panoramy 4K doczytuje się wersja 8K i podmienia ją w locie
+  var moze8k = gl.getParameter(gl.MAX_TEXTURE_SIZE) >= 8192 && window.matchMedia('(min-width: 900px) and (pointer: fine)').matches;
+  function doostrz(n) {
+    var p = S.punkty[n]; if (!moze8k || !p.duzy) return;
+    var im = new Image();
+    im.onload = function () { if (akt === n && !przej) { wgraj(biez, im); rysuj(); } };
+    im.src = p.duzy;
+  }
   function wgraj(ktora, im) {
     gl.activeTexture(ktora ? gl.TEXTURE1 : gl.TEXTURE0); gl.bindTexture(gl.TEXTURE_2D, tex[ktora]);
     gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGB, gl.RGB, gl.UNSIGNED_BYTE, im);
@@ -103,6 +111,7 @@
     if (plan) Array.prototype.forEach.call(plan.querySelectorAll('[data-punkt]'), function (b) { b.setAttribute('aria-current', +b.dataset.punkt === n); });
     if (stozek) { stozek.style.left = (p.u * 100) + '%'; stozek.style.top = (p.v * 100) + '%'; }
     info.textContent = p.opis;
+    doostrz(n);
   }
   function blisko(a, b) { var d = (a - b) % (2 * Math.PI); if (d > Math.PI) d -= 2 * Math.PI; if (d < -Math.PI) d += 2 * Math.PI; return b + d; }
   // n: punkt docelowy; wStrone: kierunek, w którym leży (kliknięta pigułka w kadrze) albo nic (lista, plan)
