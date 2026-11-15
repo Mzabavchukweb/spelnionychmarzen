@@ -793,3 +793,51 @@ html, body { overflow-x: hidden; overflow-x: clip; }
 }
 @keyframes gest { 0%, 100% { transform: translateX(-4px); } 50% { transform: translateX(4px); } }
 @media (prefers-reduced-motion: reduce) { .nawigator__gest i { animation: none; } }
+
+/* ===== 15.11 (10): przycisk „Zadzwoń” jako okrągły przycisk z ilustracją słuchawki (zamiast dolnego paska),
+   podpowiedź przesuwania makiety z animowanym palcem, dopracowana sekcja budowy i stopka na telefonie ===== */
+.detal { filter: none; }                                       /* drop-shadow na tym obrazie zostawiał w Safari na iPhonie niedomalowany prostokąt nad zdjęciem hero */
+.nw { white-space: nowrap; }
+.dzwon { display: none; }
+@media (max-width: 960px) {
+  .dzwon { display: grid; place-items: center; position: fixed; left: auto; right: 16px; bottom: calc(16px + env(safe-area-inset-bottom)); z-index: 15; width: 62px; height: 62px; min-height: 0; padding: 0; gap: 0;
+    border-radius: 50%; background: #fff; box-shadow: 0 14px 30px -10px rgba(12, 23, 48, .5); grid-template-columns: none;
+    opacity: 0; visibility: hidden; transform: translateY(12px); transition: opacity .25s, transform .25s, visibility .25s; }
+  .dzwon--widac { opacity: 1; visibility: visible; transform: none; }
+  .dzwon img { width: 36px; height: auto; display: block; }
+  .dzwon::before, .dzwon::after { content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none; box-shadow: 0 0 0 3px var(--kobalt); opacity: 0; animation: dzwon-puls 2.6s cubic-bezier(.22, .8, .24, 1) infinite; }
+  .dzwon::after { animation-delay: 1.3s; }
+  .menu-otwarte .dzwon, .spacer-otwarty .dzwon { display: none; }
+  .stopka { padding-bottom: calc(40px + env(safe-area-inset-bottom)); }
+}
+@keyframes dzwon-puls { 0% { opacity: .55; transform: scale(1); } 70%, 100% { opacity: 0; transform: scale(1.45); } }
+@media (prefers-reduced-motion: reduce) { .dzwon, .dzwon::before, .dzwon::after { transition: none; animation: none; } }
+
+@media (max-width: 600px) {
+  .nawigator__gest { gap: 12px; padding: 6px 18px 6px 10px; font-size: 14px; }
+  .nawigator__palec { position: relative; flex: none; width: 56px; height: 36px; }
+  .nawigator__palec::before { content: ""; position: absolute; left: 6px; right: 6px; top: 7px; height: 2px; border-radius: 2px; background: rgba(255, 255, 255, .35); }
+  .nawigator__palec img { position: absolute; left: 0; top: 2px; width: 30px; height: auto; animation: palec 2.2s cubic-bezier(.45, 0, .2, 1) infinite; }
+}
+@keyframes palec { 0% { transform: translateX(26px); opacity: 0; } 12% { opacity: 1; } 62% { transform: translateX(0); opacity: 1; } 78%, 100% { transform: translateX(0); opacity: 0; } }
+@media (prefers-reduced-motion: reduce) { .nawigator__palec img { animation: none; } }
+
+@media (max-width: 760px) {
+  /* budowa: trzy dane w dwóch kolumnach, podpis zdjęcia, licznik i strzałki w jednym rzędzie */
+  .budowa__stan { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px 20px; }
+  .budowa__stan > div:first-child { grid-column: 1 / -1; }
+  .budowa__stan dd { font-size: 19px; margin-top: 4px; }
+  .przeglad figcaption { grid-template-columns: minmax(0, 1fr) auto auto; gap: 8px 14px; margin-top: 14px; }
+  .przeglad__podpis { grid-column: auto; }
+  .budowa__strzalki .przycisk { width: 46px; min-height: 46px; }
+  .budowa .dalej { margin-top: 22px; }
+  .dalej a { display: inline-block; padding: 12px 0; line-height: 1.4; }
+  .budowa { padding-bottom: 72px; }
+  /* stopka: menu w dwóch kolumnach, równe odstępy bloków */
+  .stopka__gora { display: block; }
+  .stopka__menu { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 24px; margin-top: 20px; font-size: 17px; }
+  .stopka__dane { margin-top: 36px; gap: 26px; }
+  .stopka__dane b { margin-bottom: 4px; }
+  .stopka__dol { margin-top: 36px; }
+  .stopka .zastrzezenie { font-size: 13px; line-height: 1.6; }
+}

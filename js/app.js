@@ -113,21 +113,9 @@
     nr_.scrollLeft = srodek();
     if (gest) {
       gest.hidden = false;
-      var sam = true, schowaj = function () { if (sam) return; gest.classList.add('znika'); setTimeout(function () { gest.hidden = true; }, 450); nr_.removeEventListener('scroll', schowaj); };
-      nr_.addEventListener('scroll', schowaj, { passive: true });
-      nr_.addEventListener('touchstart', function () { sam = false; }, { passive: true, once: true });
-      if ('IntersectionObserver' in window && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-        var og = new IntersectionObserver(function (es) {
-          if (!es[0].isIntersecting) return; og.disconnect();
-          var t0 = null, s0 = srodek();
-          requestAnimationFrame(function krok(t) {
-            if (!sam) return; if (t0 === null) t0 = t;
-            var k = Math.min(1, (t - t0) / 1800); nr_.scrollLeft = s0 + Math.sin(k * Math.PI * 2) * 90 * (1 - k * 0.3);
-            if (k < 1) requestAnimationFrame(krok); else setTimeout(function () { sam = false; }, 100);
-          });
-        }, { threshold: 0.6 });
-        og.observe(nr_);
-      } else sam = false;
+      // makieta sama się nie rusza; ruch pokazuje animowany palec w podpowiedzi, która znika po pierwszym dotknięciu makiety
+      var schowaj = function () { gest.classList.add('znika'); setTimeout(function () { gest.hidden = true; }, 450); };
+      nr_.addEventListener('touchstart', function () { setTimeout(schowaj, 500); }, { passive: true, once: true });
     }
   }
 

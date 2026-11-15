@@ -211,3 +211,4 @@
 .wejdz .spacer__pasek p, .wejdz .lok__opis { color: var(--na-ciemnym); }
 .wejdz .przypis a { color: #fff; font-weight: 600; text-underline-offset: 4px; }
 @media (max-width: 760px) { .wejdz .przypis a { display: inline-flex; align-items: center; min-height: 44px; } }
+@media (max-width: 760px) { .dalej a { display: inline; padding: 0; line-height: 1.6; } .dalej { padding: 10px 0; } }
