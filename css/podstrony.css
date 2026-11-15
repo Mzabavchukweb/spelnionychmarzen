@@ -159,3 +159,10 @@
   .spacer__fakt-tekst { max-width: 170px; font-size: 13px; }
   .spacer__narzedzia { right: 10px; top: 10px; }
 }
+@media (max-width: 760px) {
+  #spacer-punkty { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; margin-right: calc(-1 * var(--margines)); padding-right: var(--margines); }
+  #spacer-punkty::-webkit-scrollbar { display: none; }
+  #spacer-punkty button { white-space: nowrap; }
+  .spacer__pasek { display: block; }
+  .spacer__pasek p { margin-top: 12px; }
+}

@@ -147,5 +147,6 @@
   document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && pole.classList.contains('spacer--pelny')) pelny(false); });
   window.addEventListener('resize', rysuj);
   klatka = requestAnimationFrame(tyka);
+  setTimeout(function () { pole.classList.add('spacer--ruszony'); }, 7000);   // podpowiedź znika sama, obrót trwa do pierwszego dotknięcia
   pokaz(0);
 })();
