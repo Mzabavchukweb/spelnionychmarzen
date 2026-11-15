@@ -201,3 +201,13 @@
   .spacer__krag { box-shadow: inset 0 0 0 2.5px #fff; }
   .spacer__plan, .spacer__przejscie, .spacer__fakt-tekst { box-shadow: none; }
 }
+
+/* Spacer jako sekcja strony głównej (granat, jak sekcja budowy) */
+.wejdz .spacer { margin-top: clamp(40px, 5vw, 64px); background: var(--atrament-2); }
+.wejdz .spacer__lista button { color: var(--na-ciemnym); }
+.wejdz .spacer__lista button::before { background: rgba(255, 255, 255, .25); }
+.wejdz .spacer__lista button[aria-pressed="true"] { color: #fff; }
+.wejdz .spacer__lista button[aria-pressed="true"]::before { background: #fff; box-shadow: 0 0 0 4px rgba(255, 255, 255, .22); }
+.wejdz .spacer__pasek p, .wejdz .lok__opis { color: var(--na-ciemnym); }
+.wejdz .przypis a { color: #fff; font-weight: 600; text-underline-offset: 4px; }
+@media (max-width: 760px) { .wejdz .przypis a { display: inline-flex; align-items: center; min-height: 44px; } }

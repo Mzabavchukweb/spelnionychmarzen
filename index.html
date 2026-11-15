@@ -25,7 +25,7 @@
       <a href="#lokalizacja">Lokalizacja</a>
       <a href="#budowa">Budowa</a>
       <a href="standard.html">Standard</a>
-      <a href="spacer.html">Spacer 360°</a>
+      <a href="#spacer-360">Spacer 360°</a>
       <a href="#kontakt">Kontakt</a>
       <div class="menu__dol">
         <a class="przycisk" href="tel:+48604995123">Zadzwoń: 604 995 123</a>
@@ -116,11 +116,13 @@
       </div>
       <div class="nawigator__rys" id="nawigator-rys">
         <div class="nawigator__plotno">
-          <img src="img/makieta-2400.webp" srcset="img/makieta-1400.webp 1400w, img/makieta-2400.webp 2400w" sizes="(max-width: 600px) 980px, (max-width: 1440px) 100vw, 1320px" width="2400" height="1070" alt="Makieta 3D pierwszego etapu osiedla według planu zagospodarowania: droga ze szlabanem, 5 bliźniaków po jednej stronie i 3 po drugiej" loading="lazy">
+          <picture>
+            <source media="(max-width: 960px)" srcset="img/makieta-pion-1200.webp" width="1200" height="1374">
+            <img src="img/makieta-2400.webp" srcset="img/makieta-1400.webp 1400w, img/makieta-2400.webp 2400w" sizes="(max-width: 1440px) 100vw, 1320px" width="2400" height="1070" alt="Makieta 3D pierwszego etapu osiedla według planu zagospodarowania: droga ze szlabanem, 5 bliźniaków po jednej stronie i 3 po drugiej" loading="lazy">
+          </picture>
           <svg viewBox="0 0 3689 1645" id="nav-svg" role="group" aria-label="Domy na makiecie, wybierz dom"></svg>
         </div>
       </div>
-      <p class="nawigator__podpowiedz">Przesuń makietę palcem w bok, żeby zobaczyć całe osiedle.</p>
       <div class="nawigator__dol">
         <p class="legenda"><span><i class="kropka"></i><span>Wolne (<span data-wolne>14</span>)</span></span><span><i class="kropka kropka--sprzedany"></i><span>Sprzedane (<span data-sprzedane>2</span>)</span></span></p>
         <p class="przypis">Makieta według planu zagospodarowania.</p>
@@ -163,6 +165,42 @@
         <p class="przypis">Rysunki z projektu architektonicznego. Kliknij rysunek, żeby go powiększyć.</p>
       </div>
     </div>
+  </div>
+</section>
+
+<section class="sekcja sekcja--granat wejdz" id="spacer-360" aria-labelledby="h-spacer">
+  <div class="w">
+    <div class="lok__gora">
+      <div>
+        <p class="etykieta">Wirtualny spacer</p>
+        <h2 id="h-spacer">Wejdź do środka.</h2>
+      </div>
+      <p class="lok__opis">Dom typu B: pokój dzienny, jadalnia z kuchnią, hol, ogród i wejście. Przeciągnij obraz, żeby się rozejrzeć, i wybierz punkt, żeby przejść dalej.</p>
+    </div>
+    <!-- SPACER -->
+    <div class="spacer" id="spacer">
+      <canvas id="spacer-plotno" tabindex="0" role="img" aria-label="Panorama 360° domu typu B. Strzałki na klawiaturze obracają widok, plus i minus przybliżają."></canvas>
+      <div id="spacer-znaczniki"></div>
+      <div class="spacer__narzedzia">
+        <button type="button" data-zoom="-10" aria-label="Przybliż">+</button>
+        <button type="button" data-zoom="10" aria-label="Oddal">&minus;</button>
+        <button type="button" data-plan aria-pressed="true">Plan</button>
+        <button type="button" data-pelny>Pełny ekran</button>
+      </div>
+      <div class="spacer__plan" id="spacer-plan" aria-label="Plan parteru z punktami spaceru">
+        <img src="img/spacer/plan-b-parter.webp" width="720" height="720" alt="">
+        <span class="spacer__stozek" id="spacer-stozek"></span>
+      </div>
+      <p class="spacer__podpowiedz">Przeciągnij, żeby się rozejrzeć</p>
+    </div>
+    <div class="spacer__pasek">
+      <div class="spacer__lista" role="group" aria-label="Punkt spaceru" id="spacer-punkty"></div>
+      <p id="spacer-info" aria-live="polite"></p>
+    </div>
+    <noscript><div class="wizualizacje"><figure><img src="img/spacer/b-parter-salon-2048.jpg" width="2048" height="1024" alt="Panorama: pokój dzienny, dom typu B" loading="lazy"><figcaption>Pokój dzienny</figcaption></figure><figure><img src="img/spacer/b-parter-jadalnia-kuchnia-2048.jpg" width="2048" height="1024" alt="Panorama: jadalnia i kuchnia, dom typu B" loading="lazy"><figcaption>Jadalnia i kuchnia</figcaption></figure><figure><img src="img/spacer/b-parter-hol-2048.jpg" width="2048" height="1024" alt="Panorama: hol przy schodach, dom typu B" loading="lazy"><figcaption>Hol przy schodach</figcaption></figure><figure><img src="img/spacer/b-ogrod-2048.jpg" width="2048" height="1024" alt="Panorama: ogród, dom typu B" loading="lazy"><figcaption>Ogród</figcaption></figure><figure><img src="img/spacer/b-front-2048.jpg" width="2048" height="1024" alt="Panorama: przed domem, dom typu B" loading="lazy"><figcaption>Przed domem</figcaption></figure></div></noscript>
+    <div class="wizualizacje spacer__zapas" hidden><figure><img src="img/spacer/b-parter-salon-2048.jpg" width="2048" height="1024" alt="Panorama: pokój dzienny, dom typu B" loading="lazy"><figcaption>Pokój dzienny</figcaption></figure><figure><img src="img/spacer/b-parter-jadalnia-kuchnia-2048.jpg" width="2048" height="1024" alt="Panorama: jadalnia i kuchnia, dom typu B" loading="lazy"><figcaption>Jadalnia i kuchnia</figcaption></figure><figure><img src="img/spacer/b-parter-hol-2048.jpg" width="2048" height="1024" alt="Panorama: hol przy schodach, dom typu B" loading="lazy"><figcaption>Hol przy schodach</figcaption></figure><figure><img src="img/spacer/b-ogrod-2048.jpg" width="2048" height="1024" alt="Panorama: ogród, dom typu B" loading="lazy"><figcaption>Ogród</figcaption></figure><figure><img src="img/spacer/b-front-2048.jpg" width="2048" height="1024" alt="Panorama: przed domem, dom typu B" loading="lazy"><figcaption>Przed domem</figcaption></figure></div>
+    <!-- /SPACER -->
+    <p class="przypis">Układ ścian, okna, schody i ustawienie mebli według rzutu parteru typu B. Wystrój, zieleń, osoby i pies to przykładowa aranżacja. <a href="spacer.html">Spacer na osobnej stronie</a></p>
   </div>
 </section>
 
@@ -309,7 +347,7 @@
         <a href="#typy">Typy domów</a>
         <a href="#lokalizacja">Lokalizacja</a>
         <a href="#budowa">Budowa</a>
-        <a href="spacer.html">Spacer 360°</a>
+        <a href="#spacer-360">Spacer 360°</a>
         <a href="dziennik-budowy.html">Dziennik budowy</a>
         <a href="standard.html">Standard</a>
         <a href="#pytania">Pytania</a>
@@ -338,6 +376,8 @@
   </div>
 </dialog>
 
+<script src="js/spacer-dane.js" defer></script>
+<script src="js/spacer.js" defer></script>
 <script src="js/dane.js"></script>
 <script src="js/makieta.js"></script>
 <script src="js/app.js"></script>

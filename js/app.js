@@ -66,9 +66,16 @@
   var NS = 'http://www.w3.org/2000/svg';
   var svg = document.getElementById('nav-svg'), lista = document.getElementById('lista'), karta = document.getElementById('karta');
   function s(tag, attrs) { var e = document.createElementNS(NS, tag); for (var k in attrs) e.setAttribute(k, attrs[k]); return e; }
-  var piny = s('g', { 'class': 'piny' });
-  DOMY.forEach(function (d) {
-    var m = MK[d.id];
+  // Makieta ma dwa widoki: poziomy na komputer i pionowy na telefon (cała mieści się na ekranie, bez przewijania w bok).
+  var mqMak = window.matchMedia('(max-width: 960px)'), wybrany = null;
+  function rysujMakiete() {
+    var pion = mqMak.matches && window.MAKIETA_PION, dane = pion ? window.MAKIETA_PION.domy : MK, wym = pion ? window.MAKIETA_PION.wym : window.MAKIETA_WYM;
+    var szer = svg.getBoundingClientRect().width || 360;      // tabliczka ma mieć na ekranie co najmniej 17 px wysokości
+    var skala = Math.min(2.2, Math.max(1, 17 / (58 * szer / wym[0])));
+    svg.textContent = ''; svg.setAttribute('viewBox', '0 0 ' + wym[0] + ' ' + wym[1]);
+    var piny = s('g', { 'class': 'piny' });
+    DOMY.forEach(function (d) {
+    var m = dane[d.id];
     var g = s('g', { 'class': 'dom', 'data-id': d.id, 'data-status': d.status, tabindex: '0', role: 'button', 'aria-pressed': 'false',
       'aria-label': 'Dom ' + d.id + ', typ ' + d.typ + ', ' + ST[d.status].toLowerCase() });
     g.appendChild(s('path', { d: m.d, 'class': 'dom__obrys' }));
@@ -77,12 +84,15 @@
     svg.appendChild(g);
     // tabliczka: pole, wcięta biała ramka, numer
     var w = 38 + d.id.length * 24, h = 58;
-    var p = s('g', { 'class': 'pin', 'data-id': d.id, 'data-status': d.status, transform: 'translate(' + m.pin[0] + ' ' + m.pin[1] + ')', 'aria-hidden': 'true' });
+    var p = s('g', { 'class': 'pin', 'data-id': d.id, 'data-status': d.status, transform: 'translate(' + m.pin[0] + ' ' + m.pin[1] + ') scale(' + skala + ')', 'aria-hidden': 'true' });
     p.appendChild(s('rect', { x: -w / 2, y: -h / 2, width: w, height: h, rx: h / 2, 'class': 'pin__pole' }));
     p.appendChild(s('rect', { x: -w / 2 + 6, y: -h / 2 + 6, width: w - 12, height: h - 12, rx: 6, 'class': 'pin__ramka' }));
     var tx = s('text', { y: 12.5, 'class': 'pin__nr' }); tx.textContent = d.id; p.appendChild(tx);
     piny.appendChild(p);
-
+    });
+    svg.appendChild(piny);
+  }
+  DOMY.forEach(function (d) {
     var tr = el('tr'); tr.dataset.id = d.id; tr.dataset.status = d.status;
     var td = el('td'), wb = el('button', 'wybierz'); wb.type = 'button';
     wb.setAttribute('aria-label', 'Pokaż dom ' + d.id); wb.appendChild(nr(d));
@@ -94,10 +104,7 @@
       '</td><td class="status-k">' + ST[d.status] + '</td>');
     lista.appendChild(tr);
   });
-  svg.appendChild(piny);
-  // na telefonie makieta przewija się w bok; startujemy od środka
-  var nr_ = document.getElementById('nawigator-rys');
-  if (nr_ && nr_.scrollWidth > nr_.clientWidth) nr_.scrollLeft = (nr_.scrollWidth - nr_.clientWidth) / 2;
+  rysujMakiete();
 
   // Filtry typu i statusu
   var filtr = { typ: '', status: '' };
@@ -115,7 +122,7 @@
   window.filtrujTyp = function (k) { filtr.typ = k; filtr.status = ''; zastosuj(); };
 
   function wybierz(id) {
-    var d = znajdz(id), t = T[d.typ];
+    var d = znajdz(id), t = T[d.typ]; wybrany = id;
     svg.querySelectorAll('.dom').forEach(function (g) { g.setAttribute('aria-pressed', g.getAttribute('data-id') === id); });
     svg.querySelectorAll('.pin').forEach(function (p) { p.classList.toggle('akt', p.getAttribute('data-id') === id); });
     lista.querySelectorAll('tr').forEach(function (r) { if (r.dataset.id === id) r.setAttribute('aria-current', 'true'); else r.removeAttribute('aria-current'); });
@@ -144,6 +151,7 @@
     karta.appendChild(a);
   }
   wybierz(DOMY.filter(function (d) { return d.status === 'wolny'; })[0].id);
+  mqMak.addEventListener('change', function () { rysujMakiete(); zastosuj(); if (wybrany) wybierz(wybrany); });
 
   // Typy domów: zakładki, przełącznik parter / piętro, tabela pomieszczeń
   var zak = document.getElementById('zakladki'), opis = document.getElementById('typ-opis'), rzut = document.getElementById('rzut');

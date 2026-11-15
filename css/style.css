@@ -778,3 +778,11 @@ html, body { overflow-x: hidden; overflow-x: clip; }
 @media (max-width: 380px) { .filtr button { padding: 0 10px; font-size: 13px; } }
 /* kontakt i stopka mają ten sam kolor: zakładka 1 px, żeby na styku nie prześwitywała jasna kreska */
 .stopka { margin-top: -1px; position: relative; }
+
+/* ===== 15.11 (9): makieta na telefonie w widoku pionowym, cała na ekranie, bez przewijania w bok ===== */
+.nawigator__rys picture { display: block; }
+@media (max-width: 960px) {
+  .nawigator__rys { overflow: visible; }
+  .nawigator__plotno { width: 100%; max-width: 640px; margin: 0 auto; }
+  .nawigator__rys img { aspect-ratio: 1200 / 1374; height: auto; }
+}

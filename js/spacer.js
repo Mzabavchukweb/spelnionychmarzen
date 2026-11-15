@@ -254,5 +254,9 @@
   window.addEventListener('resize', rysuj);
   requestAnimationFrame(tyka);
   setTimeout(function () { pole.classList.add('spacer--ruszony'); }, 7000);   // podpowiedź znika sama, obrót trwa do pierwszego dotknięcia
-  pokaz(0);
+  // start dopiero, gdy spacer zbliża się do ekranu (na stronie głównej leży w połowie strony)
+  if ('IntersectionObserver' in window) {
+    var st = new IntersectionObserver(function (es) { if (es[0].isIntersecting) { st.disconnect(); pokaz(0); } }, { rootMargin: '700px 0px' });
+    st.observe(pole);
+  } else pokaz(0);
 })();
