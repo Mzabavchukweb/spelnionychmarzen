@@ -10,6 +10,12 @@
   document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && menu.classList.contains('otwarte')) { ustawMenu(false); mp.focus(); } });
   window.matchMedia('(min-width: 961px)').addEventListener('change', function (e) { if (e.matches) ustawMenu(false); });
 
+  // Podstrona z ciemną górą: nagłówek przezroczysty na górze, biały po przewinięciu albo przy otwartym menu
+  if (document.body.classList.contains('pod--ciemna')) {
+    var stanNag = function () { nag.classList.toggle('naglowek--pelny', window.scrollY > 24 || menu.classList.contains('otwarte')); };
+    window.addEventListener('scroll', stanNag, { passive: true }); mp.addEventListener('click', stanNag); menu.addEventListener('click', stanNag); stanNag();
+  }
+
   var ostY = window.scrollY;
   window.addEventListener('scroll', function () {
     var y = window.scrollY;

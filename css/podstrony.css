@@ -101,3 +101,30 @@
 @media (max-width: 760px) {
   .przekroj figcaption a { display: inline-flex; align-items: center; min-height: 44px; }
 }
+
+/* Standard: ciemna góra z rysunkiem przekroju z projektu (białe linie na granacie), tytuł i liczby po lewej */
+.std-hero { position: relative; isolation: isolate; overflow: hidden; background: var(--atrament); color: #fff; min-height: min(100svh, 940px); padding: calc(100px + clamp(32px, 5vw, 80px)) 0 clamp(48px, 5vw, 80px); display: flex; align-items: flex-end; }
+.std-hero > .w { position: relative; }
+.std-hero__rys { position: absolute; z-index: -1; right: max(-40px, calc((100vw - 1440px) / 2 - 20px)); bottom: -6%; height: 96%; width: auto; max-width: none; opacity: .62; -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 38%); mask-image: linear-gradient(90deg, transparent 0, #000 38%); }
+.std-hero__tresc { max-width: 620px; }
+.std-hero .okruszki { color: var(--na-ciemnym); margin-bottom: clamp(24px, 3vw, 40px); }
+.std-hero .okruszki a { color: #fff; }
+.std-hero h1 { font-size: clamp(46px, 5.4vw, 92px); }
+.std-hero__lid { font-size: clamp(19px, 1.5vw, 23px); line-height: 1.45; color: rgba(255, 255, 255, .88); max-width: 26em; margin-top: 26px; }
+.std-hero .fakty { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px 40px; margin-top: clamp(40px, 5vw, 72px); }
+.std-hero .fakty dt { color: var(--na-ciemnym); }
+.std-hero .fakty dd { color: #fff; font-size: clamp(40px, 3.8vw, 60px); }
+.std-hero .przypis { color: var(--na-ciemnym); max-width: 34em; margin-top: 28px; }
+.std-hero :focus-visible { outline-color: #fff; }
+@media (max-width: 960px) {
+  .std-hero { min-height: 0; }
+  .std-hero__rys { right: -22%; bottom: auto; top: 70px; height: 62%; opacity: .26; -webkit-mask-image: linear-gradient(180deg, #000 30%, transparent 100%); mask-image: linear-gradient(180deg, #000 30%, transparent 100%); }
+}
+@media (max-width: 760px) {
+  .std-hero { padding-top: calc(84px + 150px); }
+  .std-hero .fakty { gap: 22px 20px; }
+}
+.std-hero .fakty small { color: var(--na-ciemnym); }
+.std-hero__tresc { max-width: 760px; }
+.std-hero .fakty { max-width: 560px; }
+@media (max-width: 760px) { .std-hero { padding-top: calc(84px + 96px); } }

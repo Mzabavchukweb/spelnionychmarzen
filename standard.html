@@ -12,11 +12,11 @@
 <link rel="stylesheet" href="css/style.css">
 <link rel="stylesheet" href="css/podstrony.css">
 </head>
-<body class="pod">
+<body class="pod pod--ciemna">
 
 <a class="pomin" href="#tresc">Przejdź do treści</a>
 
-<header class="naglowek naglowek--pelny">
+<header class="naglowek">
   <div class="naglowek__w">
     <a class="logo" href="index.html" aria-label="Osiedle Spełnionych Marzeń, strona główna"><img src="img/logo.svg" width="236" height="58" alt="ul. Spełnionych Marzeń"></a>
     <nav class="menu" id="menu" aria-label="Główna">
@@ -43,27 +43,21 @@
 
 <main id="tresc">
 
-<section class="sekcja intro std-glowa" aria-labelledby="h-std">
+<section class="std-hero" aria-labelledby="h-std">
+  <img class="std-hero__rys" src="img/przekroj-bb-bialy.webp" width="1640" height="1700" alt="Przekrój B-B domu typu A z projektu architektonicznego: klatka schodowa, parter, piętro i dach">
   <div class="w">
-    <nav class="okruszki" aria-label="Ścieżka"><a href="index.html">Osiedle</a><span aria-hidden="true">/</span><span aria-current="page">Standard i technologia</span></nav>
-    <div class="intro__gora">
-      <div>
-        <p class="etykieta">Standard i technologia</p>
-        <h1 id="h-std">Jak zbudowany jest dom.</h1>
-        <img class="detal detal--ogrod" src="img/dom-front.webp" width="1400" height="1046" alt="Model bliźniaka od strony wejść i garaży">
-      </div>
-      <div class="intro__opis">
-        <p class="intro__lid">Technologia tradycyjna, ogrzewanie podłogowe, rekuperacja, klimatyzacja i fotowoltaika. Dom spełnia parametry domu energooszczędnego.</p>
-        <p>Poniżej wszystko, co wiadomo o budynku, instalacjach i stanie, w jakim odbierasz dom. Dane pochodzą z opisu inwestycji i z projektu architektonicznego.</p>
-      </div>
+    <div class="std-hero__tresc">
+      <nav class="okruszki" aria-label="Ścieżka"><a href="index.html">Osiedle</a><span aria-hidden="true">/</span><span aria-current="page">Standard i technologia</span></nav>
+      <h1 id="h-std">Jak zbudowany<br>jest dom.</h1>
+      <p class="std-hero__lid">Technologia tradycyjna, ogrzewanie podłogowe, rekuperacja, klimatyzacja i fotowoltaika. Dom spełnia parametry domu energooszczędnego.</p>
+      <dl class="fakty">
+        <div><dt>Ocieplenie, styropian</dt><dd>18–20<small> cm</small></dd></div>
+        <div><dt>Okna</dt><dd>3<small> szyby</small></dd></div>
+        <div><dt>Nachylenie dachu</dt><dd>30<small>°</small></dd></div>
+        <div><dt>U ścian zewnętrznych</dt><dd><small>do </small>0,20</dd></div>
+      </dl>
+      <p class="przypis">U: współczynnik przenikania ciepła w W/(m²·K), według projektu. Rysunek: przekrój B-B domu typu A z projektu architektonicznego.</p>
     </div>
-    <dl class="fakty">
-      <div><dt>Ocieplenie, styropian</dt><dd>18–20<small> cm</small></dd></div>
-      <div><dt>Okna</dt><dd>3<small> szyby</small></dd></div>
-      <div><dt>Nachylenie dachu</dt><dd>30<small>°</small></dd></div>
-      <div><dt>U ścian zewnętrznych</dt><dd><small>do </small>0,20</dd></div>
-    </dl>
-    <p class="przypis">Model domu: ilustracja poglądowa. U: współczynnik przenikania ciepła w W/(m²·K), według projektu.</p>
   </div>
 </section>
 
