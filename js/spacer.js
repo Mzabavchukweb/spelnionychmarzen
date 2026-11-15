@@ -40,20 +40,38 @@
   var znaczniki = document.getElementById('spacer-znaczniki'), lista = document.getElementById('spacer-punkty');
   var plan = document.getElementById('spacer-plan'), stozek = document.getElementById('spacer-stozek');
   var bezRuchu = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var dotyk = window.matchMedia('(pointer: coarse)').matches;
   var obrazy = {}, oszczedza = !!(navigator.connection && navigator.connection.saveData);
-  function obraz(n, gotowy) {
-    var p = S.punkty[n], im = obrazy[n];
-    if (!im) { im = obrazy[n] = new Image(); im.src = maly ? p.maly : p.obraz; }
-    if (!gotowy) return;
-    if (im.complete && im.naturalWidth) gotowy(im); else im.addEventListener('load', function () { gotowy(im); }, { once: true });
+  // Ładowanie bez przycięć: plik pobiera się w tle (fetch), dekoduje poza głównym wątkiem (createImageBitmap),
+  // a do karty graficznej trafia dopiero, gdy nikt nie przeciąga obrazu.
+  function pobierz(url) {
+    if (!window.fetch || !window.createImageBitmap) {
+      return new Promise(function (ok) { var im = new Image(); im.onload = function () { ok(im); }; im.src = url; });
+    }
+    return fetch(url).then(function (r) { return r.blob(); });
   }
-  // na dużym ekranie, gdy karta graficzna pozwala, po pokazaniu panoramy 4K doczytuje się wersja 8K i podmienia ją w locie
-  var moze8k = gl.getParameter(gl.MAX_TEXTURE_SIZE) >= 8192 && window.matchMedia('(min-width: 900px) and (pointer: fine)').matches;
+  function dekoduj(x) { return (window.Blob && x instanceof Blob) ? createImageBitmap(x) : Promise.resolve(x); }
+  function obraz(n, gotowy) {
+    var p = S.punkty[n];
+    if (!obrazy[n]) obrazy[n] = pobierz(maly ? p.maly : p.obraz);
+    if (gotowy) obrazy[n].then(dekoduj).then(gotowy);
+  }
+  // Na dużym ekranie, gdy karta graficzna pozwala, po pokazaniu panoramy 4K doczytuje się wersja 8K i podmienia ją,
+  // ale tylko w chwili spokoju (bez przeciągania, wybiegu i przejścia).
+  var moze8k = gl.getParameter(gl.MAX_TEXTURE_SIZE) >= 8192 && window.matchMedia('(min-width: 900px) and (pointer: fine)').matches && !oszczedza;
+  function spokoj() { return !ciagnie && !przej && Math.abs(vy) < 0.00002 && Math.abs(vp) < 0.00002; }
   function doostrz(n) {
     var p = S.punkty[n]; if (!moze8k || !p.duzy) return;
-    var im = new Image();
-    im.onload = function () { if (akt === n && !przej) { wgraj(biez, im, n); rysuj(); } };
-    im.src = p.duzy;
+    setTimeout(function () {
+      if (akt !== n || cv.width < 1700) return;
+      pobierz(p.duzy).then(dekoduj).then(function (im) {
+        (function czekaj() {
+          if (akt !== n) { if (im.close) im.close(); return; }
+          if (!spokoj()) { setTimeout(czekaj, 400); return; }
+          wgraj(biez, im, n); if (im.close) im.close(); rysuj();
+        })();
+      });
+    }, 1800);
   }
   var obr = [0, 0];                                           // o ile stopni środek obrazu jest obrócony względem kierunku „w stronę ogrodu”
   function wgraj(ktora, im, n) {
@@ -61,8 +79,9 @@
     gl.activeTexture(ktora ? gl.TEXTURE1 : gl.TEXTURE0); gl.bindTexture(gl.TEXTURE_2D, tex[ktora]);
     gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGB, gl.RGB, gl.UNSIGNED_BYTE, im);
   }
+  function zwolnij(im) { if (im && im.close) im.close(); }
   function rozmiar() {
-    var r = cv.getBoundingClientRect(), d = Math.min(window.devicePixelRatio || 1, 2);
+    var r = cv.getBoundingClientRect(), d = Math.min(window.devicePixelRatio || 1, dotyk ? 1.6 : 2, (dotyk ? 1500 : 2560) / Math.max(1, r.width));
     var w = Math.round(r.width * d), h = Math.round(r.height * d);
     if (cv.width !== w || cv.height !== h) { cv.width = w; cv.height = h; gl.viewport(0, 0, w, h); }
     return r;
@@ -84,7 +103,7 @@
       if (z2 <= 0.05) { z.hidden = true; return; }
       var sx = x1 / z2 / (tg * asp), syy = y2 / z2 / tg;
       z.hidden = Math.abs(sx) > 1.02 || Math.abs(syy) > 1.02;
-      z.style.left = ((sx + 1) / 2 * 100) + '%'; z.style.top = ((1 - syy) / 2 * 100) + '%';
+      z.style.transform = 'translate(' + ((sx + 1) / 2 * r.width).toFixed(1) + 'px,' + ((1 - syy) / 2 * r.height).toFixed(1) + 'px) ' + (z.className === 'spacer__fakt' ? 'translate(-17px, -50%)' : 'translate(-50%, -100%)');
     });
     if (stozek) stozek.style.transform = 'translate(-50%, -50%) rotate(' + (yaw / RAD) + 'deg)';
   }
@@ -113,6 +132,8 @@
       znaczniki.appendChild(b);
     });
     Array.prototype.forEach.call(lista.children, function (b, k) { b.setAttribute('aria-pressed', k === n); });
+    var ak = lista.children[n];                               // w telefonie lista przewija się w bok: aktywny punkt ma być widoczny
+    if (ak && lista.scrollWidth > lista.clientWidth) lista.scrollLeft = ak.offsetLeft - (lista.clientWidth - ak.offsetWidth) / 2;
     if (plan) Array.prototype.forEach.call(plan.querySelectorAll('[data-punkt]'), function (b) { b.setAttribute('aria-current', +b.dataset.punkt === n); });
     if (stozek) { stozek.style.left = (p.u * 100) + '%'; stozek.style.top = (p.v * 100) + '%'; }
     info.textContent = p.opis;
@@ -128,9 +149,9 @@
       pole.classList.remove('spacer--czeka');
       var cel = wStrone == null ? p.start * RAD : wStrone;
       if (akt < 0 || bezRuchu) {
-        wgraj(biez, im, n); gotowe = true; yaw = cel; pitch = 0; fov = FOV0; vy = vp = 0; opisz(n); rysuj(); return;
+        wgraj(biez, im, n); zwolnij(im); gotowe = true; yaw = cel; pitch = 0; fov = FOV0; vy = vp = 0; opisz(n); rysuj(); return;
       }
-      wgraj(1 - biez, im, n);
+      wgraj(1 - biez, im, n); zwolnij(im);
       znaczniki.innerHTML = ''; vy = vp = 0;
       przej = { t0: 0, n: n, yaw0: yaw, pitch0: pitch, fov0: fov, cel: wStrone == null ? null : blisko(wStrone, yaw),
                 yaw2: wStrone == null ? cel : blisko(wStrone, yaw), pitch2: 0, fov2: FOV0, m: 0, idzie: wStrone != null };
@@ -166,10 +187,12 @@
   // ruch: przeciąganie z wybiegiem, powolny obrót do pierwszego dotknięcia, przybliżanie
   function ogranicz() { pitch = Math.max(-1.25, Math.min(1.25, pitch)); fov = Math.max(52 * RAD, Math.min(95 * RAD, fov)); }
   function dotkniete() { if (!ruszone) { ruszone = true; pole.classList.add('spacer--ruszony'); } }
+  var widac = true;
+  if ('IntersectionObserver' in window) new IntersectionObserver(function (es) { widac = es[0].isIntersecting; }, { threshold: 0.05 }).observe(pole);
   function tyka(t) {
     var dt = Math.min(50, t - ost || 16); ost = t;
     if (przej) krokPrzejscia(t);
-    else if (!ciagnie && gotowe) {
+    else if (widac && !ciagnie && gotowe) {
       if (!ruszone && !bezRuchu) { yaw += 0.00006 * dt; rysuj(); }
       else if (Math.abs(vy) > 0.00002 || Math.abs(vp) > 0.00002) { yaw += vy * dt; pitch += vp * dt; vy *= 0.93; vp *= 0.93; ogranicz(); rysuj(); }
     }
