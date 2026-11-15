@@ -185,7 +185,7 @@
   });
 
   // ruch: przeciąganie z wybiegiem, powolny obrót do pierwszego dotknięcia, przybliżanie
-  function ogranicz() { pitch = Math.max(-1.25, Math.min(1.25, pitch)); fov = Math.max(52 * RAD, Math.min(95 * RAD, fov)); }
+  function ogranicz() { pitch = Math.max(-1.25, Math.min(1.25, pitch)); fov = Math.max((dotyk ? 38 : 52) * RAD, Math.min(95 * RAD, fov)); cv.dataset.pole = Math.round(fov / RAD); }
   function dotkniete() { if (!ruszone) { ruszone = true; pole.classList.add('spacer--ruszony'); } }
   var widac = true;
   if ('IntersectionObserver' in window) new IntersectionObserver(function (es) { widac = es[0].isIntersecting; }, { threshold: 0.05 }).observe(pole);
@@ -198,15 +198,37 @@
     }
     requestAnimationFrame(tyka);
   }
-  var px = 0, py = 0, pt = 0;
-  cv.addEventListener('pointerdown', function (e) { if (przej) return; ciagnie = true; px = e.clientX; py = e.clientY; pt = e.timeStamp; vy = vp = 0; cv.setPointerCapture(e.pointerId); dotkniete(); });
+  // Jeden palec albo mysz obraca widok; dwa palce przybliżają i oddalają (bez obracania).
+  var px = 0, py = 0, pt = 0, palce = {}, szczypta = null;
+  function ilePalcow() { return Object.keys(palce).length; }
+  function rozstaw() { var k = Object.keys(palce), a = palce[k[0]], b = palce[k[1]]; return Math.hypot(a.x - b.x, a.y - b.y) || 1; }
+  cv.addEventListener('pointerdown', function (e) {
+    if (przej) return;
+    palce[e.pointerId] = { x: e.clientX, y: e.clientY };
+    try { cv.setPointerCapture(e.pointerId); } catch (x) {}
+    vy = vp = 0; dotkniete();
+    if (ilePalcow() === 2) { szczypta = { d: rozstaw(), fov: fov }; ciagnie = false; }
+    else if (ilePalcow() === 1) { ciagnie = true; px = e.clientX; py = e.clientY; pt = e.timeStamp; }
+  });
   cv.addEventListener('pointermove', function (e) {
-    if (!ciagnie || przej) return;
+    if (przej || !palce[e.pointerId]) return;
+    palce[e.pointerId] = { x: e.clientX, y: e.clientY };
+    if (szczypta) {
+      if (ilePalcow() >= 2) { fov = szczypta.fov * szczypta.d / rozstaw(); ogranicz(); rysuj(); }
+      return;
+    }
+    if (!ciagnie) return;
     var r = cv.getBoundingClientRect(), k = fov / r.height, dt = Math.max(1, e.timeStamp - pt);
     var dy = -(e.clientX - px) * k, dp = (e.pointerType === 'mouse' || pole.classList.contains('spacer--pelny')) ? (e.clientY - py) * k : 0;
     yaw += dy; pitch += dp; vy = dy / dt; vp = dp / dt; px = e.clientX; py = e.clientY; pt = e.timeStamp; ogranicz(); rysuj();
   });
-  ['pointerup', 'pointercancel'].forEach(function (n) { cv.addEventListener(n, function () { ciagnie = false; }); });
+  ['pointerup', 'pointercancel', 'lostpointercapture'].forEach(function (n) {
+    cv.addEventListener(n, function (e) {
+      delete palce[e.pointerId];
+      if (szczypta) { vy = vp = 0; if (ilePalcow() === 0) szczypta = null; return; }   // po szczypaniu drugi palec nie zaczyna obracać
+      if (ilePalcow() === 0) ciagnie = false;
+    });
+  });
   cv.addEventListener('wheel', function (e) { if (przej || (!e.ctrlKey && !pole.classList.contains('spacer--pelny'))) return; e.preventDefault(); fov += e.deltaY * 0.0012; ogranicz(); rysuj(); dotkniete(); }, { passive: false });
   cv.addEventListener('keydown', function (e) {
     var d = { ArrowLeft: [-0.12, 0, 0], ArrowRight: [0.12, 0, 0], ArrowUp: [0, 0.08, 0], ArrowDown: [0, -0.08, 0], '+': [0, 0, -0.1], '=': [0, 0, -0.1], '-': [0, 0, 0.1] }[e.key];
