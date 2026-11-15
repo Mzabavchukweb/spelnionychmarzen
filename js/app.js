@@ -186,7 +186,7 @@
       '<div class="typ__pow">' + m2(t.pow) + '<small>powierzchnia domu z garażem, ' + t.sypialnie + ' sypialnie</small></div>' +
       '<table class="pomieszczenia"><caption>' + (elew ? 'Kondygnacje' : kond === 'parter' ? 'Parter' : 'Piętro') + '</caption><tbody>' + rows +
       '</tbody><tfoot><tr><td>Razem</td><td>' + m2(elew ? t.pow : t[kond + 'Razem']) + '</td></tr></tfoot></table>' +
-      '<p class="typ__pdf"><a href="' + baza + 'pdf/typ-' + mt + '-parter.pdf" target="_blank" rel="noopener">Rzut parteru (PDF)</a><a href="' + baza + 'pdf/typ-' + mt + '-pietro.pdf" target="_blank" rel="noopener">Rzut piętra (PDF)</a></p>' +
+      '<p class="typ__pdf"><a href="' + baza + 'pdf/typ-' + mt + '-parter.pdf" target="_blank" rel="noopener">Rzut parteru (PDF)</a><a href="' + baza + 'pdf/typ-' + mt + '-pietro.pdf" target="_blank" rel="noopener">Rzut piętra (PDF)</a><a href="' + baza + 'typ-' + mt + '.html">Typ ' + typ + ': przekrój, elewacje i wszystkie rysunki &rarr;</a></p>' +
       '<p class="przypis">Domy tego typu na osiedlu:</p>';
     var g = el('div', 'typ__domy'); domy.forEach(function (d) { g.appendChild(nr(d)); }); opis.appendChild(g);
   }
