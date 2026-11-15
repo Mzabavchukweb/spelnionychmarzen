@@ -272,3 +272,16 @@
     });
   }
 })();
+
+// Powiększenie zdjęć: przesunięcie palcem w bok zmienia zdjęcie (działa przez przyciski „poprzednie / następne”)
+(function () {
+  var d = document.getElementById('foto'); if (!d) return;
+  var x0 = null, y0 = 0;
+  d.addEventListener('touchstart', function (e) { if (e.touches.length === 1) { x0 = e.touches[0].clientX; y0 = e.touches[0].clientY; } else x0 = null; }, { passive: true });
+  d.addEventListener('touchend', function (e) {
+    if (x0 === null || d.classList.contains('foto--jeden')) return;
+    var dx = e.changedTouches[0].clientX - x0, dy = e.changedTouches[0].clientY - y0; x0 = null;
+    if (Math.abs(dx) < 45 || Math.abs(dx) < Math.abs(dy) * 1.4) return;
+    var b = d.querySelector('[data-krok="' + (dx < 0 ? 1 : -1) + '"]'); if (b && !b.hidden) b.click();
+  }, { passive: true });
+})();
