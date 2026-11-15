@@ -8,7 +8,7 @@
   mp.addEventListener('click', function () { ustawMenu(!menu.classList.contains('otwarte')); });
   menu.addEventListener('click', function (e) { if (e.target.closest('a')) ustawMenu(false); });
   document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && menu.classList.contains('otwarte')) { ustawMenu(false); mp.focus(); } });
-  window.matchMedia('(min-width: 961px)').addEventListener('change', function (e) { if (e.matches) ustawMenu(false); });
+  window.matchMedia('(min-width: 1181px)').addEventListener('change', function (e) { if (e.matches) ustawMenu(false); });
 
   // Podstrona z ciemną górą: nagłówek przezroczysty na górze, biały po przewinięciu albo przy otwartym menu
   if (document.body.classList.contains('pod--ciemna')) {
