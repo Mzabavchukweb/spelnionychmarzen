@@ -214,3 +214,7 @@
 @media (max-width: 760px) { .dalej a { display: inline; padding: 0; line-height: 1.6; } .dalej { padding: 10px 0; } }
 /* pełny ekran: żadnych marginesów z reguł sekcji (margines .wejdz .spacer spychał kadr w dół w telefonie) */
 .spacer.spacer--pelny, .wejdz .spacer.spacer--pelny { margin: 0 !important; top: 0; left: 0; }
+/* iPhone zamienia numer NIP na link telefoniczny, a linki w stopce są blokowe: numer spadał do nowej linii */
+.stopka__dane .nw a, .stopka__dane a[href^="tel"]:not([href*="48604995123"]) { display: inline; min-height: 0; color: inherit; }
+/* linki „dalej” w telefonie zawsze w jednej linii */
+@media (max-width: 760px) { .dalej a { white-space: nowrap; font-size: clamp(14px, 4.3vw, 17px); } }
