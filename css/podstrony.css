@@ -212,3 +212,5 @@
 .wejdz .przypis a { color: #fff; font-weight: 600; text-underline-offset: 4px; }
 @media (max-width: 760px) { .wejdz .przypis a { display: inline-flex; align-items: center; min-height: 44px; } }
 @media (max-width: 760px) { .dalej a { display: inline; padding: 0; line-height: 1.6; } .dalej { padding: 10px 0; } }
+/* pełny ekran: żadnych marginesów z reguł sekcji (margines .wejdz .spacer spychał kadr w dół w telefonie) */
+.spacer.spacer--pelny, .wejdz .spacer.spacer--pelny { margin: 0 !important; top: 0; left: 0; }
