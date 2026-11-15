@@ -43,51 +43,90 @@
 
 <main id="tresc">
 
-<section class="pod-glowa">
+<section class="sekcja intro std-glowa" aria-labelledby="h-std">
   <div class="w">
     <nav class="okruszki" aria-label="Ścieżka"><a href="index.html">Osiedle</a><span aria-hidden="true">/</span><span aria-current="page">Standard i technologia</span></nav>
-    <h1>Standard i technologia.</h1>
-    <p class="pod-lid">Jak zbudowany jest dom, co jest w cenie i w jakim stanie go odbierasz. Według opisu inwestycji i projektu architektonicznego.</p>
+    <div class="intro__gora">
+      <div>
+        <p class="etykieta">Standard i technologia</p>
+        <h1 id="h-std">Jak zbudowany jest dom.</h1>
+        <img class="detal detal--ogrod" src="img/dom-front.webp" width="1400" height="1046" alt="Model bliźniaka od strony wejść i garaży">
+      </div>
+      <div class="intro__opis">
+        <p class="intro__lid">Technologia tradycyjna, ogrzewanie podłogowe, rekuperacja, klimatyzacja i fotowoltaika. Dom spełnia parametry domu energooszczędnego.</p>
+        <p>Poniżej wszystko, co wiadomo o budynku, instalacjach i stanie, w jakim odbierasz dom. Dane pochodzą z opisu inwestycji i z projektu architektonicznego.</p>
+      </div>
+    </div>
+    <dl class="fakty">
+      <div><dt>Ocieplenie, styropian</dt><dd>18–20<small> cm</small></dd></div>
+      <div><dt>Okna</dt><dd>3<small> szyby</small></dd></div>
+      <div><dt>Nachylenie dachu</dt><dd>30<small>°</small></dd></div>
+      <div><dt>U ścian zewnętrznych</dt><dd><small>do </small>0,20</dd></div>
+    </dl>
+    <p class="przypis">Model domu: ilustracja poglądowa. U: współczynnik przenikania ciepła w W/(m²·K), według projektu.</p>
   </div>
 </section>
 
-<section class="pod-sekcja sekcja--kamien" aria-labelledby="h-budynek">
+<section class="sekcja sekcja--kamien" aria-labelledby="h-budynek">
   <div class="w">
-    <h2 id="h-budynek">Budynek</h2>
-    <dl class="odpowiedzi">
-      <div><dt>Konstrukcja</dt><dd>Technologia tradycyjna: płyta fundamentowa, ściany z silikatów i lany strop żelbetowy.</dd></div>
+    <div class="lok__gora">
+      <div>
+        <p class="etykieta">Budynek</p>
+        <h2 id="h-budynek">Silikaty, żelbet, dach czterospadowy.</h2>
+      </div>
+      <p class="lok__opis">Dom jest murowany, w technologii tradycyjnej. Parametry ścian, dachu i podłogi pochodzą z projektu architektonicznego z czerwca 2025.</p>
+    </div>
+    <dl class="spec">
+      <div><dt>Konstrukcja</dt><dd>Płyta fundamentowa, ściany z silikatów i lany strop żelbetowy.</dd></div>
       <div><dt>Dach</dt><dd>Czterospadowy, o nachyleniu 30°, nad poddaszem nieużytkowym. W przestrzeni poddasza prowadzone są kanały rekuperacji.</dd></div>
-      <div><dt>Ocieplenie</dt><dd>Styropian 18–20 cm.</dd><dd>Według projektu współczynnik przenikania ciepła nie przekracza 0,20 W/(m²·K) dla ścian zewnętrznych, 0,15 W/(m²·K) dla dachu i 0,30 W/(m²·K) dla podłogi na gruncie.</dd></div>
+      <div><dt>Ocieplenie</dt><dd>Styropian 18–20 cm.</dd><dd>Współczynnik przenikania ciepła nie przekracza 0,20 W/(m²·K) dla ścian zewnętrznych, 0,15 W/(m²·K) dla dachu i 0,30 W/(m²·K) dla podłogi na gruncie.</dd></div>
       <div><dt>Okna</dt><dd>PCV, trzyszybowe, opcjonalnie z roletami.</dd></div>
-      <div><dt>Energooszczędność</dt><dd>Dom spełnia parametry domu energooszczędnego.</dd></div>
     </dl>
+    <figure class="std-foto">
+      <img src="img/wiz-3-2400.webp" srcset="img/wiz-3-1200.webp 1200w, img/wiz-3-2400.webp 2400w" sizes="(max-width: 1440px) 100vw, 1360px" width="2400" height="1177" alt="Ogrody za domami: trawniki, tarasy i okna tarasowe" loading="lazy">
+      <figcaption>Ogrody za domami. Wizualizacja inwestora.</figcaption>
+    </figure>
   </div>
 </section>
 
-<section class="pod-sekcja" aria-labelledby="h-instalacje">
+<section class="sekcja sekcja--granat" aria-labelledby="h-instalacje">
   <div class="w">
-    <h2 id="h-instalacje">Instalacje</h2>
-    <dl class="odpowiedzi">
+    <div class="lok__gora">
+      <div>
+        <p class="etykieta">Instalacje</p>
+        <h2 id="h-instalacje">Ciepło z podłogi, świeże powietrze, własny prąd.</h2>
+      </div>
+      <p class="lok__opis">Dom jest ogrzewany elektrycznie i ma rekuperację, klimatyzację oraz fotowoltaikę. Woda i kanalizacja są z sieci.</p>
+    </div>
+    <dl class="spec">
       <div><dt>Ogrzewanie</dt><dd>Elektryczne: kabel grzewczy zatopiony w posadzkach.</dd></div>
-      <div><dt>Woda i kanalizacja</dt><dd>Woda i kanalizacja z sieci. W domu instalacja wodna, kanalizacyjna i ciepłej wody użytkowej.</dd></div>
       <div><dt>Wentylacja i chłodzenie</dt><dd>Rekuperacja i klimatyzacja.</dd></div>
-      <div><dt>Fotowoltaika i woda deszczowa</dt><dd>Na zewnątrz instalacja fotowoltaiczna i zbiornik na wodę deszczową. Na obie instalacje można uzyskać dotację z programów rządowych.</dd></div>
+      <div><dt>Fotowoltaika i woda deszczowa</dt><dd>Na zewnątrz instalacja fotowoltaiczna i zbiornik na wodę deszczową.</dd><dd>Na obie instalacje można uzyskać dotację z programów rządowych.</dd></div>
+      <div><dt>Woda i kanalizacja</dt><dd>Z sieci. W domu instalacja wodna, kanalizacyjna i ciepłej wody użytkowej.</dd></div>
     </dl>
   </div>
 </section>
 
-<section class="pod-sekcja sekcja--kamien" aria-labelledby="h-stan">
+<section class="sekcja" aria-labelledby="h-stan">
   <div class="w">
-    <h2 id="h-stan">Stan deweloperski</h2>
-    <dl class="odpowiedzi">
-      <div><dt>Co jest zrobione</dt><dd>Tynki, posadzki, sucha zabudowa sufitu i instalacje.</dd></div>
-      <div><dt>Układ domu</dt><dd>Salon z aneksem kuchennym, dwie łazienki, 3 lub 4 pokoje na piętrze, garaż i pomieszczenie gospodarcze. Powierzchnia około 120 m², zależnie od typu.</dd><dd><a href="index.html#typy">Porównaj cztery typy domów</a></dd></div>
-      <div><dt>Działka</dt><dd>Ogrodzona, około 500 m².</dd></div>
-      <div><dt>Osiedle</dt><dd>Przed domami utwardzona, oświetlona droga dojazdowa. Wjazd na osiedle przez zamykany szlaban.</dd></div>
-      <div><dt>Termin</dt><dd>Trwa budowa 8 budynków pierwszego etapu, czyli 16 domów. Oddanie do użytkowania planowane jest na II kwartał 2027.</dd><dd><a href="dziennik-budowy.html">Zobacz dziennik budowy</a></dd></div>
-      <div><dt>Cena</dt><dd>8&nbsp;900 zł za m². Szczegółowe warunki sprzedaży ustalamy indywidualnie.</dd><dd><a href="index.html#domy">Ceny wszystkich domów</a></dd></div>
+    <div class="lok__gora">
+      <div>
+        <p class="etykieta">Stan deweloperski</p>
+        <h2 id="h-stan">W jakim stanie odbierasz dom.</h2>
+      </div>
+      <p class="lok__opis">Trwa budowa 8 budynków pierwszego etapu, czyli 16 domów. Oddanie do użytkowania planowane jest na II kwartał 2027.</p>
+    </div>
+    <dl class="spec">
+      <div><dt>Wykonane prace</dt><dd>Tynki, posadzki, sucha zabudowa sufitu i instalacje.</dd></div>
+      <div><dt>Układ domu</dt><dd>Salon z aneksem kuchennym, dwie łazienki, 3 lub 4 pokoje na piętrze, garaż i pomieszczenie gospodarcze. Powierzchnia około 120 m², zależnie od typu.</dd><dd><a href="index.html#typy">Porównaj cztery typy domów <span aria-hidden="true">&rarr;</span></a></dd></div>
+      <div><dt>Działka i osiedle</dt><dd>Ogrodzona działka około 500 m². Przed domami utwardzona, oświetlona droga dojazdowa, wjazd przez zamykany szlaban.</dd></div>
+      <div><dt>Cena</dt><dd>8&nbsp;900 zł za m². Szczegółowe warunki sprzedaży ustalamy indywidualnie.</dd><dd><a href="index.html#domy">Ceny wszystkich domów <span aria-hidden="true">&rarr;</span></a></dd></div>
     </dl>
-    <p class="przypis">Informacje mają charakter poglądowy i mogą ulec zmianie. Parametry przegród według projektu architektonicznego z czerwca 2025.</p>
+    <figure class="std-foto">
+      <img src="img/budowa-img-3324-1600.webp" width="1600" height="1200" alt="Budowa osiedla, 7 października 2026" loading="lazy">
+      <figcaption>Budowa, 7 października 2026. <a href="dziennik-budowy.html">Dziennik budowy</a></figcaption>
+    </figure>
+    <p class="przypis">Informacje mają charakter poglądowy i mogą ulec zmianie.</p>
   </div>
 </section>
 

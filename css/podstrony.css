@@ -53,3 +53,28 @@
   .dalej a, .inne-typy a, .okruszki a { display: inline-flex; align-items: center; min-height: 44px; }
   .okruszki { align-items: center; margin-bottom: 12px; }
 }
+
+/* Standard i technologia: ten sam układ co sekcje strony głównej (etykieta, duży nagłówek, opis obok, duże liczby, zdjęcie) */
+.std-glowa { padding-top: calc(100px + clamp(40px, 5vw, 80px)); }
+.std-glowa h1 { font-size: clamp(36px, 4vw, 66px); line-height: 1.02; letter-spacing: -.03em; max-width: 9em; }
+.std-glowa .okruszki { margin-bottom: clamp(32px, 4vw, 56px); }
+.spec { margin: clamp(48px, 5vw, 80px) 0 0; display: grid; gap: clamp(32px, 3.4vw, 52px); }
+.spec > div { display: grid; grid-template-columns: minmax(0, 6fr) minmax(0, 5fr); gap: 10px clamp(32px, 6vw, 112px); align-items: baseline; }
+.spec dt { grid-row: 1 / span 3; font: 600 clamp(24px, 2.3vw, 36px)/1.15 var(--sans); letter-spacing: -.03em; }
+.spec dd { grid-column: 2; margin: 0; font-size: clamp(18px, 1.5vw, 22px); line-height: 1.5; max-width: 28em; }
+.spec dd + dd { color: var(--tekst-2); }
+.spec dd a { font-weight: 600; color: var(--kobalt); text-underline-offset: 5px; text-decoration-thickness: 1px; }
+.sekcja--granat .lok__opis, .sekcja--granat .spec dd + dd { color: var(--na-ciemnym); }
+.std-foto { margin-top: clamp(56px, 6vw, 96px); }
+.std-foto img { width: 100%; aspect-ratio: 16 / 7.5; object-fit: cover; border-radius: var(--r); }
+.std-foto figcaption a { color: inherit; font-weight: 600; }
+@media (max-width: 960px) {
+  .spec > div { grid-template-columns: minmax(0, 1fr); gap: 8px; }
+  .spec dt { grid-row: auto; }
+  .spec dd { grid-column: 1; }
+}
+@media (max-width: 760px) {
+  .std-glowa { padding-top: calc(84px + 28px); }
+  .std-foto img { aspect-ratio: 4 / 3; }
+  .std-foto figcaption a { display: inline-flex; align-items: center; min-height: 44px; }
+}
