@@ -78,3 +78,26 @@
   .std-foto img { aspect-ratio: 4 / 3; }
   .std-foto figcaption a { display: inline-flex; align-items: center; min-height: 44px; }
 }
+
+/* Standard: ilustracje przekrojowe obok opisu i rysunek przekroju z projektu z podpisanymi miejscami */
+.std-uklad { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: 32px clamp(32px, 5vw, 80px); align-items: center; margin-top: clamp(32px, 4vw, 56px); }
+.std-uklad figure { margin-left: -4%; }
+.std-uklad--odwr figure { order: 2; margin: 0 -4% 0 0; }
+.std-uklad img { width: 100%; height: auto; }
+.std-uklad figcaption { margin: 0 0 0 4%; }
+.std-uklad .spec { margin-top: 0; gap: clamp(24px, 2.6vw, 40px); }
+.spec--waska > div { grid-template-columns: minmax(0, 1fr); gap: 6px; }
+.spec--waska dt { grid-row: auto; font-size: clamp(22px, 1.9vw, 28px); }
+.spec--waska dd { grid-column: 1; font-size: clamp(17px, 1.3vw, 20px); }
+.sekcja--granat .std-uklad figcaption { color: var(--na-ciemnym); }
+.przekroj { margin-top: clamp(56px, 6vw, 96px); background: #fff; border-radius: var(--r); padding: clamp(16px, 3vw, 48px) clamp(16px, 3vw, 48px) clamp(14px, 2vw, 28px); }
+.przekroj__rys { position: relative; }
+.przekroj__rys img { width: 100%; height: auto; }
+.przekroj figcaption a { color: inherit; font-weight: 600; }
+@media (max-width: 960px) {
+  .std-uklad { grid-template-columns: minmax(0, 1fr); }
+  .std-uklad figure, .std-uklad--odwr figure { order: 0; margin: 0 -4%; }
+}
+@media (max-width: 760px) {
+  .przekroj figcaption a { display: inline-flex; align-items: center; min-height: 44px; }
+}
