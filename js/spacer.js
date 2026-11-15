@@ -5,7 +5,10 @@
   if (!S || !pole || !cv) return;
   var gl = cv.getContext('webgl', { antialias: false });
   var info = document.getElementById('spacer-info');
-  if (!gl) { info.textContent = 'Ta przeglądarka nie obsługuje podglądu 360°.'; pole.classList.add('spacer--bez'); return; }
+  if (!gl) {                                                  // bez WebGL: zwykłe obrazy z każdego punktu
+    info.textContent = 'Ta przeglądarka nie obsługuje podglądu 360°. Poniżej widok z każdego punktu.'; pole.classList.add('spacer--bez');
+    var z = document.querySelector('.spacer__zapas'); if (z) z.hidden = false; return;
+  }
 
   function shader(typ, kod) { var s = gl.createShader(typ); gl.shaderSource(s, kod); gl.compileShader(s); return s; }
   var pr = gl.createProgram();
@@ -37,7 +40,7 @@
   var znaczniki = document.getElementById('spacer-znaczniki'), lista = document.getElementById('spacer-punkty');
   var plan = document.getElementById('spacer-plan'), stozek = document.getElementById('spacer-stozek');
   var bezRuchu = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var obrazy = {};
+  var obrazy = {}, oszczedza = !!(navigator.connection && navigator.connection.saveData);
   function obraz(n, gotowy) {
     var p = S.punkty[n], im = obrazy[n];
     if (!im) { im = obrazy[n] = new Image(); im.src = maly ? p.maly : p.obraz; }
@@ -49,10 +52,12 @@
   function doostrz(n) {
     var p = S.punkty[n]; if (!moze8k || !p.duzy) return;
     var im = new Image();
-    im.onload = function () { if (akt === n && !przej) { wgraj(biez, im); rysuj(); } };
+    im.onload = function () { if (akt === n && !przej) { wgraj(biez, im, n); rysuj(); } };
     im.src = p.duzy;
   }
-  function wgraj(ktora, im) {
+  var obr = [0, 0];                                           // o ile stopni środek obrazu jest obrócony względem kierunku „w stronę ogrodu”
+  function wgraj(ktora, im, n) {
+    obr[ktora] = (S.punkty[n].obrot || 0) * RAD;
     gl.activeTexture(ktora ? gl.TEXTURE1 : gl.TEXTURE0); gl.bindTexture(gl.TEXTURE_2D, tex[ktora]);
     gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGB, gl.RGB, gl.UNSIGNED_BYTE, im);
   }
@@ -64,11 +69,11 @@
   }
   function rysuj() {
     if (!gotowe) return;
-    var r = rozmiar(), asp = r.width / r.height, tg = Math.tan(fov / 2);
+    var r = rozmiar(), asp = r.width / r.height, kor = Math.max(1, 0.7 / asp), tg = Math.tan(fov / 2) * kor;
     gl.activeTexture(gl.TEXTURE0); gl.bindTexture(gl.TEXTURE_2D, tex[biez]);
     gl.activeTexture(gl.TEXTURE1); gl.bindTexture(gl.TEXTURE_2D, tex[1 - biez]);
-    gl.uniform1f(U.asp, asp); gl.uniform3f(U.a, yaw, pitch, tg);
-    if (przej) { gl.uniform3f(U.b, przej.yaw2, przej.pitch2, Math.tan(przej.fov2 / 2)); gl.uniform1f(U.mieszaj, przej.m); }
+    gl.uniform1f(U.asp, asp); gl.uniform3f(U.a, yaw - obr[biez], pitch, tg);
+    if (przej) { gl.uniform3f(U.b, przej.yaw2 - obr[1 - biez], przej.pitch2, Math.tan(przej.fov2 / 2) * kor); gl.uniform1f(U.mieszaj, przej.m); }
     else gl.uniform1f(U.mieszaj, 0);
     gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
     Array.prototype.forEach.call(znaczniki.children, function (z) {
@@ -93,11 +98,11 @@
     S.punkty.forEach(function (q, k) {
       if (k === n || (p.do && p.do.indexOf(k) < 0)) return;
       var d = kierunek(p, q.x, q.y, 55);
-      var b = document.createElement('button'); b.type = 'button'; b.className = 'spacer__przejscie'; b.textContent = q.nazwa;
+      var b = document.createElement('button'); b.type = 'button'; b.className = 'spacer__przejscie'; b.innerHTML = '<span class="spacer__nazwa">' + q.nazwa + '</span><span class="spacer__krag" aria-hidden="true"></span>';
       b.dataset.yaw = d[0]; b.dataset.pitch = Math.max(d[1], -0.5);
       b.addEventListener('click', function () { pokaz(k, d[0]); });
       znaczniki.appendChild(b);
-      obraz(k);                                               // sąsiednie panoramy ładują się z wyprzedzeniem
+      if (!oszczedza) setTimeout(function () { if (akt === n) obraz(k); }, 1500);   // sąsiednie panoramy doczytują się z wyprzedzeniem
     });
     (p.fakty || []).forEach(function (f) {
       var d = kierunek(p, f.x, f.y, f.z);
@@ -123,9 +128,9 @@
       pole.classList.remove('spacer--czeka');
       var cel = wStrone == null ? p.start * RAD : wStrone;
       if (akt < 0 || bezRuchu) {
-        wgraj(biez, im); gotowe = true; yaw = cel; pitch = 0; fov = FOV0; vy = vp = 0; opisz(n); rysuj(); return;
+        wgraj(biez, im, n); gotowe = true; yaw = cel; pitch = 0; fov = FOV0; vy = vp = 0; opisz(n); rysuj(); return;
       }
-      wgraj(1 - biez, im);
+      wgraj(1 - biez, im, n);
       znaczniki.innerHTML = ''; vy = vp = 0;
       przej = { t0: 0, n: n, yaw0: yaw, pitch0: pitch, fov0: fov, cel: wStrone == null ? null : blisko(wStrone, yaw),
                 yaw2: wStrone == null ? cel : blisko(wStrone, yaw), pitch2: 0, fov2: FOV0, m: 0, idzie: wStrone != null };
@@ -187,6 +192,10 @@
   Array.prototype.forEach.call(pole.querySelectorAll('[data-zoom]'), function (b) {
     b.addEventListener('click', function () { if (przej) return; fov += +b.dataset.zoom * RAD; ogranicz(); rysuj(); dotkniete(); });
   });
+  var pp = pole.querySelector('[data-plan]');
+  function planWidac(tak) { pole.classList.toggle('spacer--bezplanu', !tak); if (pp) pp.setAttribute('aria-pressed', tak); }
+  if (pp) pp.addEventListener('click', function () { planWidac(pole.classList.contains('spacer--bezplanu')); });
+  planWidac(!window.matchMedia('(max-width: 760px)').matches);
   var pe = pole.querySelector('[data-pelny]');
   function pelny(tak) { pole.classList.toggle('spacer--pelny', tak); document.documentElement.classList.toggle('spacer-otwarty', tak); if (pe) pe.textContent = tak ? 'Zamknij' : 'Pełny ekran'; setTimeout(rysuj, 60); }
   if (pe) pe.addEventListener('click', function () {
