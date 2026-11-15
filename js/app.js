@@ -51,7 +51,23 @@
   var pyt = document.querySelectorAll('.pytania details'), mqTel = window.matchMedia('(max-width: 760px)');
   function stanPytan() { pyt.forEach(function (d) { d.open = !mqTel.matches; d.querySelector('summary').tabIndex = mqTel.matches ? 0 : -1; }); }
   mqTel.addEventListener('change', stanPytan); stanPytan();
-  pyt.forEach(function (d) { d.querySelector('summary').addEventListener('click', function (e) { if (!mqTel.matches) e.preventDefault(); }); });
+  // Na telefonie odpowiedź rozwija się i zwija płynnie (animacja wysokości), bez skoku treści pod spodem
+  var spokojnie = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  pyt.forEach(function (d) {
+    var sm = d.querySelector('summary'), anim = null;
+    sm.addEventListener('click', function (e) {
+      e.preventDefault();
+      if (!mqTel.matches) return;
+      if (spokojnie || !d.animate) { d.open = !d.open; d.classList.toggle('otwarte', d.open); return; }
+      var otwiera = anim ? !d.classList.contains('otwiera') : !d.open;
+      var od = d.offsetHeight; if (anim) anim.cancel();
+      d.style.overflow = 'hidden'; d.classList.toggle('otwiera', otwiera); d.classList.toggle('otwarte', otwiera);
+      if (otwiera) d.open = true;
+      var doo = otwiera ? d.scrollHeight : sm.offsetHeight;
+      anim = d.animate({ height: [od + 'px', doo + 'px'] }, { duration: Math.min(420, 220 + Math.abs(doo - od) * 0.6), easing: 'cubic-bezier(.4, 0, .2, 1)' });
+      anim.onfinish = function () { if (!otwiera) d.open = false; d.style.overflow = ''; d.classList.remove('otwiera'); anim = null; };
+    });
+  });
 
   function ustawMenu(o) {
     menu.classList.toggle('otwarte', o); mp.setAttribute('aria-expanded', o); mp.textContent = o ? 'Zamknij' : 'Menu';

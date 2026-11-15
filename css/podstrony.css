@@ -238,3 +238,12 @@
   .foto.foto--jeden .foto__pasek { display: block; padding: 0; }
   .foto.foto--jeden .foto__zamknij { position: fixed; }
 }
+/* pytania w telefonie: znak plus obraca się płynnie w krzyżyk, odpowiedź wchodzi z lekkim przenikaniem */
+@media (max-width: 760px) {
+  .pytania details summary::after, .pytania details[open] summary::after { content: "+"; transition: transform .3s cubic-bezier(.3, .7, .2, 1); }
+  .pytania details.otwarte summary::after { transform: rotate(45deg); }
+  .pytania details p { animation: pyt-wejscie .35s ease both; }
+  .pytania summary { -webkit-tap-highlight-color: transparent; }
+}
+@keyframes pyt-wejscie { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: reduce) { .pytania details p { animation: none; } .pytania details summary::after { transition: none; } }
