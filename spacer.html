@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Wirtualny spacer: dom typu B | Osiedle Spełnionych Marzeń</title>
+<meta name="description" content="Wirtualny spacer 360° po parterze domu typu B na osiedlu przy ul. Spełnionych Marzeń w Dobrej: pokój dzienny, jadalnia, kuchnia i hol, według rzutu z projektu.">
+<link rel="icon" href="img/ikona.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="img/ikona.png">
+<link rel="preload" href="fonty/onest.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/podstrony.css">
+</head>
+<body class="pod">
+
+<a class="pomin" href="#tresc">Przejdź do treści</a>
+
+<header class="naglowek naglowek--pelny">
+  <div class="naglowek__w">
+    <a class="logo" href="index.html" aria-label="Osiedle Spełnionych Marzeń, strona główna"><img src="img/logo.svg" width="236" height="58" alt="ul. Spełnionych Marzeń"></a>
+    <nav class="menu" id="menu" aria-label="Główna">
+      <a href="index.html#domy">Wolne domy</a>
+      <a href="index.html#typy">Typy domów</a>
+      <a href="index.html#lokalizacja">Lokalizacja</a>
+      <a href="index.html#budowa">Budowa</a>
+      <a href="standard.html">Standard</a>
+      <a href="index.html#kontakt">Kontakt</a>
+      <div class="menu__dol">
+        <a class="przycisk" href="tel:+48604995123">Zadzwoń: 604 995 123</a>
+        <p>ul. Spełnionych Marzeń, 72-003 Dobra<br>Oglądanie budowy: pon.–pt. 8:00–17:00</p>
+      </div>
+    </nav>
+    <a class="naglowek__tel" href="tel:+48604995123">604 995 123</a>
+    <button class="menu-przycisk" type="button" aria-expanded="false" aria-controls="menu">Menu</button>
+  </div>
+</header>
+
+<div class="dzwon dzwon--widac">
+  <a class="przycisk przycisk--cichy" href="index.html#domy">Wolne domy</a>
+  <a class="przycisk" href="tel:+48604995123">Zadzwoń</a>
+</div>
+
+<main id="tresc">
+
+<section class="pod-glowa">
+  <div class="w">
+    <nav class="okruszki" aria-label="Ścieżka"><a href="index.html">Osiedle</a><span aria-hidden="true">/</span><a href="index.html#typy">Typy domów</a><span aria-hidden="true">/</span><a href="typ-b.html">Typ B</a><span aria-hidden="true">/</span><span aria-current="page">Wirtualny spacer</span></nav>
+    <h1>Wirtualny spacer.</h1>
+    <p class="pod-lid">Dom typu B, parter: pokój dzienny ze schodami (28,75&nbsp;m²) i kuchnia (6,89&nbsp;m²), powierzchnie według tabeli pomieszczeń. Przeciągnij obraz, żeby się rozejrzeć, i wybierz punkt, żeby przejść dalej.</p>
+    <div class="spacer" id="spacer">
+      <canvas id="spacer-plotno" tabindex="0" role="img" aria-label="Panorama 360° wnętrza domu typu B. Strzałki na klawiaturze obracają widok."></canvas>
+      <div id="spacer-znaczniki"></div>
+      <p class="spacer__podpowiedz">Przeciągnij, żeby się rozejrzeć</p>
+    </div>
+    <div class="spacer__pasek">
+      <div class="filtr" role="group" aria-label="Punkt spaceru" id="spacer-punkty"></div>
+      <p id="spacer-info" aria-live="polite"></p>
+    </div>
+    <noscript><div class="wizualizacje"><figure><img src="img/spacer/b-parter-salon-2048.jpg" width="2048" height="1024" alt="Panorama: pokój dzienny, dom typu B, parter" loading="lazy"><figcaption>Pokój dzienny</figcaption></figure><figure><img src="img/spacer/b-parter-jadalnia-kuchnia-2048.jpg" width="2048" height="1024" alt="Panorama: jadalnia i kuchnia, dom typu B, parter" loading="lazy"><figcaption>Jadalnia i kuchnia</figcaption></figure><figure><img src="img/spacer/b-parter-hol-2048.jpg" width="2048" height="1024" alt="Panorama: hol przy schodach, dom typu B, parter" loading="lazy"><figcaption>Hol przy schodach</figcaption></figure></div></noscript>
+  </div>
+</section>
+
+<section class="pod-sekcja sekcja--kamien" aria-labelledby="h-zrodlo">
+  <div class="w">
+    <h2 id="h-zrodlo">Na czym oparty jest spacer</h2>
+    <dl class="odpowiedzi">
+      <div><dt>Z projektu</dt><dd>Układ i wymiary ścian, okna tarasowe i okno kuchenne, schody oraz rozmieszczenie mebli i sprzętów kuchennych: według rzutu parteru budynku typu B z projektu architektonicznego.</dd><dd><a href="pdf/typ-b-parter.pdf" target="_blank" rel="noopener">Rzut parteru (PDF)</a></dd></div>
+      <div><dt>Przykładowe</dt><dd>Kolory, materiały podłóg i wygląd mebli. Projekt ich nie określa, a dom jest oddawany w stanie deweloperskim, bez wyposażenia.</dd><dd><a href="standard.html">Standard i technologia</a></dd></div>
+    </dl>
+    <p class="dalej"><a href="typ-b.html">Wszystkie rysunki i domy typu B <span aria-hidden="true">&rarr;</span></a></p>
+  </div>
+</section>
+<script>window.SPACER = {"punkty": [{"nazwa": "Pokój dzienny", "x": 235, "y": 70, "start": 150, "opis": "Pokój dzienny przy oknie tarasowym 350 × 220 cm. Widok w stronę jadalni, kuchni i schodów.", "obraz": "img/spacer/b-parter-salon-4096.jpg", "maly": "img/spacer/b-parter-salon-2048.jpg"}, {"nazwa": "Jadalnia i kuchnia", "x": 305, "y": 395, "start": -20, "opis": "Środek parteru: po lewej kuchnia z półwyspem, na wprost jadalnia i okno tarasowe, po prawej schody na piętro.", "obraz": "img/spacer/b-parter-jadalnia-kuchnia-4096.jpg", "maly": "img/spacer/b-parter-jadalnia-kuchnia-2048.jpg"}, {"nazwa": "Hol przy schodach", "x": 288, "y": 600, "start": 0, "opis": "Hol między kuchnią a schodami. Za plecami drzwi do przedsionka, WC i pomieszczenia gospodarczego.", "obraz": "img/spacer/b-parter-hol-4096.jpg", "maly": "img/spacer/b-parter-hol-2048.jpg"}]};</script>
+
+<section class="pod-koniec" aria-labelledby="h-koniec">
+  <div class="w">
+    <h2 id="h-koniec">Zapytaj o dom.</h2>
+    <a class="kontakt__tel" href="tel:+48604995123">604 995 123</a>
+    <p><a class="kontakt__mail" href="mailto:osiedle@spelnionychmarzen.pl">osiedle@spelnionychmarzen.pl</a></p>
+    <p>Oglądanie budowy: poniedziałek–piątek, 8:00–17:00.</p>
+  </div>
+</section>
+</main>
+
+<footer class="stopka">
+  <div class="w">
+    <div class="stopka__gora">
+      <a class="stopka__logo" href="index.html" aria-label="Osiedle Spełnionych Marzeń, do góry strony"><img src="img/logo.svg" width="236" height="58" alt="ul. Spełnionych Marzeń" loading="lazy"></a>
+      <nav class="stopka__menu" aria-label="Stopka">
+        <a href="index.html#domy">Wolne domy</a>
+        <a href="index.html#typy">Typy domów</a>
+        <a href="index.html#lokalizacja">Lokalizacja</a>
+        <a href="index.html#budowa">Budowa</a>
+        <a href="dziennik-budowy.html">Dziennik budowy</a>
+        <a href="standard.html">Standard</a>
+        <a href="index.html#pytania">Pytania</a>
+        <a href="index.html#kontakt">Kontakt</a>
+      </nav>
+    </div>
+    <div class="stopka__dane">
+      <p><b>Sprzedaż</b><a href="tel:+48604995123">604 995 123</a><a href="mailto:osiedle@spelnionychmarzen.pl">osiedle@spelnionychmarzen.pl</a></p>
+      <p><b>Adres budowy</b>ul. Spełnionych Marzeń, 72-003 Dobra<br>poniedziałek–piątek, 8:00–17:00</p>
+      <p><b>Inwestor</b>RECYCLING GROUP Sp. z o.o. Sp. k.<br>ul. Nadbrzeżna 1, 70-031 Szczecin<br>NIP 955-249-95-22</p>
+    </div>
+    <div class="stopka__dol">
+      <p class="zastrzezenie">Informacje na stronie mają charakter wyłącznie informacyjny i nie stanowią oferty w rozumieniu art. 66 § 1 Kodeksu cywilnego. Przedstawione informacje, wizualizacje, ceny oraz parametry nieruchomości mają charakter poglądowy i mogą ulec zmianie. Szczegółowe warunki sprzedaży określane są indywidualnie.</p>
+      <p class="stopka__prawa">© 2026 Recycling Group</p>
+    </div>
+  </div>
+</footer>
+
+<dialog class="foto" id="foto" aria-label="Zdjęcie w powiększeniu">
+  <img id="foto-img" alt="">
+  <div class="foto__pasek">
+    <button type="button" class="przycisk" data-krok="-1">Poprzednie</button>
+    <span id="foto-nr"></span>
+    <button type="button" class="przycisk" data-krok="1">Następne</button>
+    <button type="button" class="przycisk foto__zamknij" data-zamknij>Zamknij</button>
+  </div>
+</dialog>
+
+<script src="js/podstrona.js"></script>
+<script src="js/spacer.js"></script>
+</body>
+</html>
