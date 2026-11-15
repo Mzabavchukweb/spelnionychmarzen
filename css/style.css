@@ -757,3 +757,24 @@ html, body { overflow-x: hidden; overflow-x: clip; }
   .tabela .skrot { display: inline; }
   .tabela td, .tabela th { padding-right: 8px; }
 }
+
+/* ===== 15.11 (8): druga runda uwag: ciemny gradient pod faktami do ok. 40% wysokości, filtry w jednym rzędzie na telefonie,
+   nagłówek chowany przy przewijaniu w dół na telefonie, mniejsza przerwa między kontaktem a stopką ===== */
+.otwarcie::before { background:
+  radial-gradient(ellipse 50% 44% at 12% 28%, rgba(12, 23, 48, .34) 0, rgba(12, 23, 48, 0) 100%),
+  linear-gradient(180deg, rgba(12, 23, 48, .36) 0, rgba(12, 23, 48, 0) 24%, rgba(12, 23, 48, 0) 58%, rgba(12, 23, 48, .74) 80%, rgba(12, 23, 48, .92) 100%); }
+@media (max-width: 760px) {
+  .otwarcie::before { background: linear-gradient(180deg, rgba(12, 23, 48, .4) 0, rgba(12, 23, 48, .08) 30%, rgba(12, 23, 48, 0) 42%, rgba(12, 23, 48, 0) 50%, rgba(12, 23, 48, .74) 68%, rgba(12, 23, 48, .9) 82%, rgba(12, 23, 48, .94) 100%); }
+  .otwarcie__linki a { gap: .5em; }
+  .filtr { gap: 4px; width: 100%; }
+  .filtr__et { flex: 0 0 100%; margin: 0 0 4px; }
+  .filtr button { flex: none; padding: 0 14px; }
+  .naglowek { transition: background-color .35s, color .35s, transform .3s; }
+  .naglowek--schowany { transform: translateY(-100%); }
+  .kontakt--gladki { padding-bottom: 8px; }
+  .stopka { padding-top: 40px; }
+}
+@media (prefers-reduced-motion: reduce) { .naglowek { transition: none; } }
+@media (max-width: 380px) { .filtr button { padding: 0 10px; font-size: 13px; } }
+/* kontakt i stopka mają ten sam kolor: zakładka 1 px, żeby na styku nie prześwitywała jasna kreska */
+.stopka { margin-top: -1px; position: relative; }

@@ -24,6 +24,15 @@
   function stanNaglowka() { nag.classList.toggle('naglowek--pelny', window.scrollY > 24 || menu.classList.contains('otwarte')); }
   window.addEventListener('scroll', stanNaglowka, { passive: true });
   stanNaglowka();
+  // Na telefonie nagłówek chowa się przy przewijaniu w dół i wraca przy przewijaniu w górę
+  var ostY = window.scrollY;
+  window.addEventListener('scroll', function () {
+    var y = window.scrollY, wDol = y > ostY + 4, wGore = y < ostY - 4;
+    if (wDol && y > 200 && !menu.classList.contains('otwarte')) nag.classList.add('naglowek--schowany');
+    else if (wGore || y <= 200) nag.classList.remove('naglowek--schowany');
+    ostY = y;
+  }, { passive: true });
+  nag.addEventListener('focusin', function () { nag.classList.remove('naglowek--schowany'); });
   // Pływający przycisk „Zadzwoń”: pojawia się po hero, znika przy sekcji kontaktu i stopce
   var dzwon = document.querySelector('.dzwon'), przyKontakcie = false;
   function stanDzwon() { if (dzwon) dzwon.classList.toggle('dzwon--widac', window.scrollY > window.innerHeight * 0.6 && !przyKontakcie); }
