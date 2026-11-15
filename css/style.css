@@ -698,3 +698,8 @@ html, body { overflow-x: clip; }
   .otwarcie__tlo img { object-position: 50% 50%; }
   .otwarcie::before { background: linear-gradient(180deg, rgba(12, 23, 48, .4) 0, rgba(12, 23, 48, .08) 30%, rgba(12, 23, 48, 0) 42%, rgba(12, 23, 48, 0) 58%, rgba(12, 23, 48, .46) 74%, rgba(12, 23, 48, .62) 100%); }
 }
+
+/* ===== 15.11 (6): strona nie przesuwa się na boki: rysunek przy pytaniach kończy się na krawędzi ekranu,
+   a przeglądarki bez overflow: clip (starszy Safari) dostają overflow-x: hidden ===== */
+.rysunek { right: 0; }
+html, body { overflow-x: hidden; overflow-x: clip; }
