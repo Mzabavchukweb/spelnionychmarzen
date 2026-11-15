@@ -19,7 +19,6 @@
   <div class="naglowek__w">
     <a class="logo" href="#" aria-label="Osiedle Spełnionych Marzeń, strona główna"><img src="img/logo.svg" width="236" height="58" alt="ul. Spełnionych Marzeń"></a>
     <nav class="menu" id="menu" aria-label="Główna">
-      <a href="#" aria-current="page">Strona główna</a>
       <a href="#domy">Wolne domy</a>
       <a href="#typy">Typy domów</a>
       <a href="#lokalizacja">Lokalizacja</a>
@@ -35,7 +34,10 @@
   </div>
 </header>
 
-<a class="dzwon" href="tel:+48604995123" aria-label="Zadzwoń: 604 995 123"><svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true"><path fill="currentColor" d="M6.6 2.5c.5-.5 1.300-.5 1.800 0l2.300 2.900c.4.5.4 1.200 0 1.700L9.300 8.900c-.3.300-.3.700-.1 1.100 1.100 2 2.800 3.700 4.800 4.800.4.200.8.200 1.100-.1l1.800-1.400c.5-.4 1.200-.4 1.700 0l2.900 2.300c.5.500.5 1.300 0 1.800l-1.500 1.700c-.9 1-2.300 1.400-3.600 1C10.500 18.500 5.500 13.500 3.900 7.600c-.4-1.300 0-2.700 1-3.600z"/></svg></a>
+<div class="dzwon">
+  <a class="przycisk przycisk--cichy" href="#domy">Wolne domy</a>
+  <a class="przycisk" href="tel:+48604995123">Zadzwoń</a>
+</div>
 
 <main id="tresc">
 
@@ -47,7 +49,7 @@
   <div class="otwarcie__tresc">
     <h1 id="h-otwarcie">Dom z ogrodem,<br>w Dobrej.</h1>
     <p class="otwarcie__linki">
-      <a href="#domy">Wolne domy <span aria-hidden="true">&rarr;</span></a>
+      <a class="przycisk przycisk--jasny" href="#domy">Wolne domy</a>
       <a href="tel:+48604995123">Zadzwoń 604 995 123 <span aria-hidden="true">&rarr;</span></a>
     </p>
   </div>
@@ -90,9 +92,11 @@
     <p class="etykieta">Wolne domy</p>
     <h2 id="h-domy">Wybierz swój dom.</h2>
     <p class="wstep-sekcji">Kliknij dom na makiecie albo w tabeli. Cena jest podana przy każdym wolnym domu.</p>
+    <p class="wstep-sekcji wstep-sekcji--ozn">Oznaczenie domu, np. <span class="nr">1A1'</span>: numer budynku, litera typu, a znak ' to druga połowa bliźniaka.</p>
     <div class="nawigator">
       <div class="nawigator__pasek">
         <div class="filtr" role="group" aria-label="Typ domu" id="filtr-typ">
+          <span class="filtr__et" aria-hidden="true">Typ</span>
           <button type="button" data-typ="" aria-pressed="true">Wszystkie</button>
           <button type="button" data-typ="A1" aria-pressed="false">A1</button>
           <button type="button" data-typ="A" aria-pressed="false">A</button>
@@ -100,6 +104,7 @@
           <button type="button" data-typ="C" aria-pressed="false">C</button>
         </div>
         <div class="filtr" role="group" aria-label="Status" id="filtr-status">
+          <span class="filtr__et" aria-hidden="true">Status</span>
           <button type="button" data-status="" aria-pressed="true">Wszystkie</button>
           <button type="button" data-status="wolny" aria-pressed="false">Wolne</button>
           <button type="button" data-status="sprzedany" aria-pressed="false">Sprzedane</button>
@@ -115,7 +120,7 @@
       <p class="nawigator__podpowiedz">Przesuń makietę palcem w bok, żeby zobaczyć całe osiedle.</p>
       <div class="nawigator__dol">
         <p class="legenda"><span><i class="kropka"></i><span>Wolne (<span data-wolne>14</span>)</span></span><span><i class="kropka kropka--sprzedany"></i><span>Sprzedane (<span data-sprzedane>2</span>)</span></span></p>
-        <p class="przypis">Makieta według planu zagospodarowania. Numer na tabliczce to numer domu, litera to typ, znak ' oznacza drugą połowę bliźniaka.</p>
+        <p class="przypis">Makieta według planu zagospodarowania.</p>
       </div>
     </div>
     <div class="plan">
@@ -125,7 +130,7 @@
       <div class="plan__dane">
         <table class="tabela">
           <caption class="ukryte">Domy pierwszego etapu: typ, powierzchnia, cena i status</caption>
-          <thead><tr><th scope="col">Dom</th><th scope="col" class="typ-k">Typ</th><th scope="col" class="l">Powierzchnia</th><th scope="col" class="l sypialnie">Sypialnie</th><th scope="col" class="l">Cena</th><th scope="col" class="status-k">Status</th></tr></thead>
+          <thead><tr><th scope="col">Dom</th><th scope="col" class="typ-k">Typ</th><th scope="col" class="l">Powierzchnia</th><th scope="col" class="l sypialnie"><span class="pelne">Sypialnie</span><abbr class="skrot" title="Sypialnie">Syp.</abbr></th><th scope="col" class="l">Cena</th><th scope="col" class="status-k">Status</th></tr></thead>
           <tbody id="lista"></tbody>
         </table>
         <p class="przypis">Powierzchnia domu z garażem według projektu architektonicznego.</p>
@@ -168,7 +173,7 @@
       <p class="lok__opis">Osiedle leży w gminie Dobra (Szczecińska), między Puszczą Wkrzańską a zachodnią granicą Szczecina. Do centrum miasta jedzie się około 21 minut.</p>
     </div>
     <figure class="mapa">
-      <img src="img/mapa.webp" width="2680" height="1409" alt="Mapa okolicy: osiedle w Dobrej na zachód od Szczecina, z zaznaczonym Jeziorem Głębokim, Lubieszynem i centrum miasta" loading="lazy">
+      <img src="img/mapa-2680.webp" srcset="img/mapa-1340.webp 1340w, img/mapa-2680.webp 2680w" sizes="(max-width: 1440px) 100vw, 1360px" width="2680" height="1409" alt="Mapa okolicy: osiedle w Dobrej na zachód od Szczecina, z zaznaczonym Jeziorem Głębokim, Lubieszynem i centrum miasta" loading="lazy">
       <span class="mapa__osiedle" style="left:23.3%;top:19.87%"><img src="img/logo.svg" width="236" height="58" alt="ul. Spełnionych Marzeń"></span>
       <span class="mapa__punkt" style="left:52.62%;top:15.63%"><b>12 min</b> Jezioro Głębokie</span>
       <span class="mapa__punkt" style="left:15.52%;top:54.59%"><b>13 min</b> Lubieszyn, granica</span>
@@ -263,22 +268,18 @@
         <h2 id="h-pyt">Co warto wiedzieć.</h2>
       </div>
     </div>
-    <dl class="odpowiedzi">
-      <div><dt>Ile kosztuje dom?</dt><dd>8 900 zł za m². Przy powierzchni od 120,06 do 127,19 m² z garażem to od <span data-cena-od>1 068 534 zł</span> do <span data-cena-do>1 131 991 zł</span>. Do domu należy ogrodzona działka około 500 m². Szczegółowe warunki sprzedaży ustalamy indywidualnie.</dd></div>
-      <div><dt>Kiedy domy będą gotowe?</dt><dd>Trwa budowa 8 budynków pierwszego etapu, czyli 16 domów. Oddanie do użytkowania planowane jest na II kwartał 2027.</dd></div>
-      <div><dt>Co obejmuje stan deweloperski?</dt><dd>Tynki, posadzki, suchą zabudowę sufitu i instalacje. W domu jest salon z aneksem kuchennym, dwie łazienki, 3 lub 4 pokoje na piętrze, garaż i pomieszczenie gospodarcze.</dd></div>
-      <div><dt>Z czego zbudowany jest dom?</dt><dd>Technologia tradycyjna: płyta fundamentowa, ściany z silikatów, lany strop żelbetowy, dach czterospadowy i poddasze nieużytkowe. Ocieplenie ze styropianu 18–20 cm, okna PCV trzyszybowe, opcjonalnie z roletami. Dom spełnia parametry domu energooszczędnego.</dd></div>
-      <div><dt>Jak dom jest ogrzewany?</dt><dd>Elektrycznie: kabel grzewczy zatopiony w posadzkach. Do tego rekuperacja i klimatyzacja, a na zewnątrz fotowoltaika i zbiornik na wodę deszczową. Na obie te instalacje można uzyskać dotację z programów rządowych.</dd></div>
-      <div><dt>Jak wygląda osiedle?</dt><dd>Przed domami biegnie utwardzona, oświetlona droga dojazdowa. Wjazd prowadzi przez zamykany szlaban, każda działka jest ogrodzona, a woda i kanalizacja są z sieci.</dd></div>
-    </dl>
+    <div class="odpowiedzi">
+      <details><summary>Ile kosztuje dom?</summary><p>8 900 zł za m². Przy powierzchni od 120,06 do 127,19 m² z garażem to od <span data-cena-od>1 068 534 zł</span> do <span data-cena-do>1 131 991 zł</span>. Do domu należy ogrodzona działka około 500 m². Szczegółowe warunki sprzedaży ustalamy indywidualnie.</p></details>
+      <details><summary>Kiedy domy będą gotowe?</summary><p>Trwa budowa 8 budynków pierwszego etapu, czyli 16 domów. Oddanie do użytkowania planowane jest na II kwartał 2027.</p></details>
+      <details><summary>Co obejmuje stan deweloperski?</summary><p>Tynki, posadzki, suchą zabudowę sufitu i instalacje. W domu jest salon z aneksem kuchennym, dwie łazienki, 3 lub 4 pokoje na piętrze, garaż i pomieszczenie gospodarcze.</p></details>
+      <details><summary>Z czego zbudowany jest dom?</summary><p>Technologia tradycyjna: płyta fundamentowa, ściany z silikatów, lany strop żelbetowy, dach czterospadowy i poddasze nieużytkowe. Ocieplenie ze styropianu 18–20 cm, okna PCV trzyszybowe, opcjonalnie z roletami. Dom spełnia parametry domu energooszczędnego.</p></details>
+      <details><summary>Jak dom jest ogrzewany?</summary><p>Elektrycznie: kabel grzewczy zatopiony w posadzkach. Do tego rekuperacja i klimatyzacja, a na zewnątrz fotowoltaika i zbiornik na wodę deszczową. Na obie te instalacje można uzyskać dotację z programów rządowych.</p></details>
+      <details><summary>Jak wygląda osiedle?</summary><p>Przed domami biegnie utwardzona, oświetlona droga dojazdowa. Wjazd prowadzi przez zamykany szlaban, każda działka jest ogrodzona, a woda i kanalizacja są z sieci.</p></details>
+    </div>
   </div>
 </section>
 
-<section class="kontakt" id="kontakt" aria-labelledby="h-kontakt">
-  <picture class="kontakt__tlo">
-    <source media="(max-width: 760px)" srcset="img/wiz-4-1200.webp">
-    <img src="img/wiz-4-2400.webp" width="2400" height="1060" alt="" loading="lazy">
-  </picture>
+<section class="kontakt kontakt--gladki" id="kontakt" aria-labelledby="h-kontakt">
   <div class="w kontakt__tresc">
     <h2 id="h-kontakt">Zapytaj o dom.</h2>
     <a class="kontakt__tel" href="tel:+48604995123">604 995 123</a>

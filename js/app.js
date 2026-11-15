@@ -38,6 +38,12 @@
   }
   stanDzwon();
 
+  // Pytania: na komputerze odpowiedzi zawsze otwarte, na telefonie rozwijane
+  var pyt = document.querySelectorAll('.pytania details'), mqTel = window.matchMedia('(max-width: 760px)');
+  function stanPytan() { pyt.forEach(function (d) { d.open = !mqTel.matches; d.querySelector('summary').tabIndex = mqTel.matches ? 0 : -1; }); }
+  mqTel.addEventListener('change', stanPytan); stanPytan();
+  pyt.forEach(function (d) { d.querySelector('summary').addEventListener('click', function (e) { if (!mqTel.matches) e.preventDefault(); }); });
+
   function ustawMenu(o) {
     menu.classList.toggle('otwarte', o); mp.setAttribute('aria-expanded', o); mp.textContent = o ? 'Zamknij' : 'Menu';
     document.documentElement.classList.toggle('menu-otwarte', o); stanNaglowka();

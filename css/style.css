@@ -703,3 +703,57 @@ html, body { overflow-x: clip; }
    a przeglądarki bez overflow: clip (starszy Safari) dostają overflow-x: hidden ===== */
 .rysunek { right: 0; }
 html, body { overflow-x: hidden; overflow-x: clip; }
+
+/* ===== 15.11 (7): uwagi z przeglądu: przycisk w hero, czytelne fakty, dolny pasek na telefonie, sypialnie w tabeli,
+   pytania rozwijane na telefonie, wizualizacje przewijane w bok, etykiety filtrów, kontakt bez powtórzonego zdjęcia ===== */
+.przycisk--jasny { background: #fff; color: var(--atrament); font-weight: 600; text-shadow: none; }
+.przycisk--cichy { background: var(--tlo-2); color: var(--atrament); }
+.otwarcie__linki { align-items: center; }
+.otwarcie__linki a.przycisk { text-transform: none; letter-spacing: .01em; text-decoration: none; font-size: 17px; min-height: 54px; padding: 0 30px; }
+.otwarcie::before { background:
+  radial-gradient(ellipse 50% 44% at 12% 28%, rgba(12, 23, 48, .34) 0, rgba(12, 23, 48, 0) 100%),
+  linear-gradient(180deg, rgba(12, 23, 48, .36) 0, rgba(12, 23, 48, 0) 24%, rgba(12, 23, 48, 0) 56%, rgba(12, 23, 48, .6) 82%, rgba(12, 23, 48, .82) 100%); }
+
+.filtr { align-items: center; }
+.filtr__et { font-size: 12px; font-weight: 500; letter-spacing: .16em; text-transform: uppercase; color: var(--tekst-2); margin-right: 6px; }
+.wstep-sekcji--ozn { font-size: 16px; margin-top: 12px; }
+.wstep-sekcji--ozn .nr { vertical-align: 1px; margin: 0 2px; }
+.tabela .skrot { display: none; text-decoration: none; }
+
+/* Pytania: na komputerze wszystkie odpowiedzi widoczne, na telefonie rozwijane */
+.pytania details { background: none; border-radius: 0; padding: 0; }
+.pytania summary { display: block; padding: 0; font: 600 clamp(22px, 1.9vw, 28px)/1.2 var(--sans); letter-spacing: -.025em; cursor: default; pointer-events: none; }
+.pytania details summary::after, .pytania details[open] summary::after { content: none; }
+.pytania details p { margin: 12px 0 0; padding: 0; color: var(--tekst-2); max-width: 34em; }
+
+.kontakt--gladki { padding-top: clamp(72px, 8vw, 120px); }
+.kontakt--gladki::before { content: none; }
+
+@media (max-width: 760px) {
+  .otwarcie__linki { align-items: flex-start; gap: 6px; }
+  .otwarcie::before { background: linear-gradient(180deg, rgba(12, 23, 48, .4) 0, rgba(12, 23, 48, .08) 30%, rgba(12, 23, 48, 0) 42%, rgba(12, 23, 48, 0) 52%, rgba(12, 23, 48, .62) 72%, rgba(12, 23, 48, .84) 100%); }
+
+  /* dolny pasek zamiast pływającego kółka: nie zasłania filtrów, cen ani strzałek */
+  .dzwon { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; left: 0; right: 0; bottom: 0; width: auto; height: auto; min-height: 0; padding: 10px 16px calc(10px + env(safe-area-inset-bottom)); border-radius: 0; background: #fff; box-shadow: 0 -6px 24px rgba(12, 23, 48, .12); }
+  .dzwon::before { content: none; }
+  .dzwon .przycisk { min-height: 48px; padding: 0 12px; font-weight: 600; }
+
+  .pytania .odpowiedzi { gap: 8px; }
+  .pytania details { background: var(--papier); border-radius: var(--r); padding: 0 20px; }
+  .pytania summary { display: flex; justify-content: space-between; align-items: center; gap: 16px; min-height: 64px; padding: 14px 0; font-size: 19px; cursor: pointer; pointer-events: auto; }
+  .pytania details summary::after { content: "+"; flex: none; display: block; width: auto; height: auto; border-radius: 0; background: none; font-size: 26px; font-weight: 400; line-height: 1; color: var(--kobalt); }
+  .pytania details[open] summary::after { content: "\2212"; }
+  .pytania details p { margin: 0; padding: 0 0 20px; }
+
+  .wizje .wizualizacje { display: flex; gap: 10px; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; margin-right: calc(-1 * var(--margines)); padding-right: var(--margines); }
+  .wizje .wizualizacje::-webkit-scrollbar { display: none; }
+  .wizje .wizualizacje figure { flex: 0 0 84%; margin: 0; scroll-snap-align: start; }
+
+  .kontakt--gladki { padding-top: 72px; }
+}
+@media (max-width: 600px) {
+  .tabela .sypialnie { display: table-cell; }
+  .tabela .pelne { display: none; }
+  .tabela .skrot { display: inline; }
+  .tabela td, .tabela th { padding-right: 8px; }
+}
