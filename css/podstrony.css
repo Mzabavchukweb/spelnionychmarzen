@@ -153,7 +153,7 @@
 .spacer__pasek { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 24px; margin-top: 18px; }
 .spacer__pasek p { color: var(--tekst-2); font-size: 16px; margin: 0; flex: 1 1 320px; }
 @media (max-width: 760px) {
-  .spacer { aspect-ratio: 4 / 5; margin-left: calc(-1 * var(--margines)); margin-right: calc(-1 * var(--margines)); border-radius: 0; }
+  .spacer { aspect-ratio: 4 / 5; }                           /* w telefonie też z marginesem i zaokrąglonym rogiem; cały ekran dopiero w trybie pełnoekranowym */
   .spacer__podpowiedz { font-size: 13px; bottom: auto; top: 70px; }
   .spacer__plan { width: 128px; left: 10px; bottom: 10px; }
   .spacer__fakt-tekst { max-width: 170px; font-size: 13px; }

@@ -69,7 +69,7 @@
   // Makieta ma dwa widoki: poziomy na komputer i pionowy na telefon (cała mieści się na ekranie, bez przewijania w bok).
   var mqMak = window.matchMedia('(max-width: 960px)'), wybrany = null;
   function rysujMakiete() {
-    var pion = mqMak.matches && window.MAKIETA_PION, dane = pion ? window.MAKIETA_PION.domy : MK, wym = pion ? window.MAKIETA_PION.wym : window.MAKIETA_WYM;
+    var pion = false, dane = pion ? window.MAKIETA_PION.domy : MK, wym = pion ? window.MAKIETA_PION.wym : window.MAKIETA_WYM;
     var szer = svg.getBoundingClientRect().width || 360;      // tabliczka ma mieć na ekranie co najmniej 17 px wysokości
     var skala = Math.min(2.2, Math.max(1, 17 / (58 * szer / wym[0])));
     svg.textContent = ''; svg.setAttribute('viewBox', '0 0 ' + wym[0] + ' ' + wym[1]);
@@ -105,6 +105,31 @@
     lista.appendChild(tr);
   });
   rysujMakiete();
+  // Na telefonie makieta jest szersza niż ekran: start od środka, a przy pierwszym pokazaniu lekko przesuwa się w bok
+  // i pokazuje podpowiedź gestu, żeby było widać, że można ją przesuwać palcem. Podpowiedź znika po pierwszym ruchu.
+  var nr_ = document.getElementById('nawigator-rys'), gest = document.getElementById('nawigator-gest');
+  function srodek() { return (nr_.scrollWidth - nr_.clientWidth) / 2; }
+  if (nr_ && nr_.scrollWidth > nr_.clientWidth + 20) {
+    nr_.scrollLeft = srodek();
+    if (gest) {
+      gest.hidden = false;
+      var sam = true, schowaj = function () { if (sam) return; gest.classList.add('znika'); setTimeout(function () { gest.hidden = true; }, 450); nr_.removeEventListener('scroll', schowaj); };
+      nr_.addEventListener('scroll', schowaj, { passive: true });
+      nr_.addEventListener('touchstart', function () { sam = false; }, { passive: true, once: true });
+      if ('IntersectionObserver' in window && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        var og = new IntersectionObserver(function (es) {
+          if (!es[0].isIntersecting) return; og.disconnect();
+          var t0 = null, s0 = srodek();
+          requestAnimationFrame(function krok(t) {
+            if (!sam) return; if (t0 === null) t0 = t;
+            var k = Math.min(1, (t - t0) / 1800); nr_.scrollLeft = s0 + Math.sin(k * Math.PI * 2) * 90 * (1 - k * 0.3);
+            if (k < 1) requestAnimationFrame(krok); else setTimeout(function () { sam = false; }, 100);
+          });
+        }, { threshold: 0.6 });
+        og.observe(nr_);
+      } else sam = false;
+    }
+  }
 
   // Filtry typu i statusu
   var filtr = { typ: '', status: '' };

@@ -103,7 +103,9 @@
       if (z2 <= 0.05) { z.hidden = true; return; }
       var sx = x1 / z2 / (tg * asp), syy = y2 / z2 / tg;
       z.hidden = Math.abs(sx) > 1.02 || Math.abs(syy) > 1.02;
-      z.style.transform = 'translate(' + ((sx + 1) / 2 * r.width).toFixed(1) + 'px,' + ((1 - syy) / 2 * r.height).toFixed(1) + 'px) ' + (z.className === 'spacer__fakt' ? 'translate(-17px, -50%)' : 'translate(-50%, -100%)');
+      var px_ = (sx + 1) / 2 * r.width;
+      if (z.className === 'spacer__przejscie') px_ = Math.max(z.offsetWidth / 2 + 10, Math.min(r.width - z.offsetWidth / 2 - 10, px_));   // podpis nie wychodzi poza kadr
+      z.style.transform = 'translate(' + px_.toFixed(1) + 'px,' + ((1 - syy) / 2 * r.height).toFixed(1) + 'px) ' + (z.className === 'spacer__fakt' ? 'translate(-17px, -50%)' : 'translate(-50%, -100%)');
     });
     if (stozek) stozek.style.transform = 'translate(-50%, -50%) rotate(' + (yaw / RAD) + 'deg)';
   }

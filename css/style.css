@@ -781,8 +781,15 @@ html, body { overflow-x: hidden; overflow-x: clip; }
 
 /* ===== 15.11 (9): makieta na telefonie w widoku pionowym, cała na ekranie, bez przewijania w bok ===== */
 .nawigator__rys picture { display: block; }
-@media (max-width: 960px) {
-  .nawigator__rys { overflow: visible; }
-  .nawigator__plotno { width: 100%; max-width: 640px; margin: 0 auto; }
-  .nawigator__rys img { aspect-ratio: 1200 / 1374; height: auto; }
+/* (widok pionowy wycofany 15.11: na telefonie wraca szeroka makieta przewijana w bok, z podpowiedzią gestu) */
+.nawigator { position: relative; }
+.nawigator__gest { display: none; }
+@media (max-width: 600px) {
+  .nawigator__gest { display: flex; align-items: center; gap: 10px; width: max-content; max-width: calc(100% - 32px); margin: -52px auto 14px; position: relative; z-index: 2; padding: 9px 16px 9px 12px; border-radius: 999px; background: rgba(21, 33, 58, .86); color: #fff; font-size: 13px; font-weight: 500; pointer-events: none; transition: opacity .4s; }
+  .nawigator__gest[hidden] { display: none; }
+  .nawigator__gest.znika { opacity: 0; }
+  .nawigator__gest i { flex: none; font-style: normal; font-size: 19px; line-height: 1; animation: gest 1.5s ease-in-out infinite; }
+  .nawigator__gest i::before { content: "\2194"; }
 }
+@keyframes gest { 0%, 100% { transform: translateX(-4px); } 50% { transform: translateX(4px); } }
+@media (prefers-reduced-motion: reduce) { .nawigator__gest i { animation: none; } }
